@@ -1,0 +1,83 @@
+<odoo>
+  <data>
+
+    <record id="wizard_manual_procurement" model="ir.ui.view">
+      <field name="name">wizard.manual.procurement</field>
+      <field name="model">manual.procurement.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Manual Manufacturing Procurement">
+          <group col="1">
+            <field name="name"/>
+            <field name="location_id"/>
+            <field name="picking_policy"/>
+          </group>
+          <separator string="Products To Manufacture"/>
+          <group>
+            <p style="color: grey">
+              Add lines below to tell Odoo what products you want to manufacture, and how many. Odoo stores previously run manual procurements which can be re-run.
+            </p>
+          </group>
+          <field name="manual_procurements">
+            <tree editable="bottom" create="1" edit="1">
+              <field name="product_id"/>
+              <field name="product_qty"/>
+            </tree>
+          </field>
+          <footer>
+            <button name="run" type="object" string="Confirm" class="oe_highlight"/>
+            <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="manual_procurement_form_view" model="ir.ui.view">
+      <field name="name">manual.procurement.form.view</field>
+      <field name="model">manual.procurement</field>
+      <field name="arch" type="xml">
+        <form>
+          <group col="2">
+            <group colspan="1">
+              <field name="product_id"/>
+            </group>
+            <group colspan="1">
+              <field name="product_qty"/>
+            </group>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="manual_procurement_search_view" model="ir.ui.view">
+      <field name="name">manual.procurement.search.view</field>
+      <field name="model">manual.procurement</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="product_id" string="Product"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="manual_procurement_tree_view" model="ir.ui.view">
+      <field name="name">manual.procurement.tree.view</field>
+      <field name="model">manual.procurement</field>
+      <field name="arch" type="xml">
+        <tree default_order="create_date desc">
+          <field name="create_date"/>
+          <field name="product_id"/>
+          <field name="product_qty"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_manual_procurement_wizard" model="ir.actions.act_window">
+      <field name="name">MRP Procurement Wizard</field>
+      <field name="res_model">manual.procurement.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_manual_procurement_wizard" id="menu_manual_procurement_wizard" parent="stock.menu_stock_warehouse_mgmt" name="Manufacture Products" sequence="150"/>
+
+  </data>
+</odoo>
