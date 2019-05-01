@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="product_attribute_view_form" model="ir.ui.view">
+        <field name="name">product.attribute.form.inherited</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/tree" position="inside">
+                <field name="image" widget="image" options="{'size': [40, 40]}"/>
+                <field name="linked_product"/>
+            </xpath>
+            <xpath expr="//field[@name='create_variant']" position="after">
+                <field name="link_to_product" attrs="{'invisible': [('create_variant','!=','no_variant')]}"/>
+            </xpath>
+            <!-- <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/form" position="inside">
+                <field name="image" widget="image"/>
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="product_attribute_line_form" model="ir.ui.view">
+        <field name="name">product.attribute.line.form.inherit</field>
+        <field name="model">product.template.attribute.line</field>
+        <field name="inherit_id" ref="product.product_template_attribute_line_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value_ids']/tree/field[@name='name']" position="after">
+                <field name="image" widget="image" options="{'size': [40, 40]}"/>
+                <field name="linked_product"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_attribute_image_variants_tree_view" model="ir.ui.view">
+        <field name="name">product.attribute.value.tree.inherited</field>
+        <field name="model">product.attribute.value</field>
+        <field name="inherit_id" ref="product.variants_tree_view"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//tree" position="inside">
+        		<field name="image" widget="image" options="{'size': [40, 40]}"/>
+                <field name="linked_product"/>
+        	</xpath>
+        </field>
+    </record>
+
+</odoo>
