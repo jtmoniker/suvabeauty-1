@@ -1,0 +1,17 @@
+<odoo>
+	<data>
+
+		<template id="snippet_featured_category_opt" name="Snippet Featured Categories Options" inherit_id="website.snippet_options">
+		  <xpath expr="//div[@data-js='background']" position="after">
+		    <div data-js="featured_category_options" data-selector=".featured-categs"/>
+		  </xpath>
+		 </template>
+
+		 <template id="snippet_featured_products_opt" name="Snippet Featured Products Options" inherit_id="website.snippet_options">
+		  <xpath expr="//div[@data-js='background']" position="after">
+		    <div data-js="featured_products_options" data-selector=".featured-products"/>
+		  </xpath>
+		 </template>
+
+	</data>
+</odoo>

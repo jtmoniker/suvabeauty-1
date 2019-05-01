@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        
+        <template id="vendere_quickview_products_modal" inherit_id="portal.frontend_layout">
+            <xpath expr="//div[@id='wrapwrap']" position="before">
+                <div id="quickview_modal" class="modal fade" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span>x</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div id="quickview_img" class="col-md-6">
+
+                                    </div>
+                                    <div id="quickview_content" class="col-md-6">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

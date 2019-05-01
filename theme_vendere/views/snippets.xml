@@ -1,0 +1,36 @@
+<odoo>
+	<data>
+
+		<template id="snippet_image_full" name="Full Width Image">
+			<section class="full_image">
+				<img src="/website/static/src/img/backgrounds/cubes.jpg" class="img img-fluid" style="width: 100%"/>
+			</section>
+		</template>
+
+		<template id="snippet_featured_categories" name="Featured Categories Snippet">
+			<section class="featured-categs">
+				<div class="row featured-categ-container">
+				</div>
+			</section>
+		</template>
+
+		<template id="snippet_featured_products" name="Featured Products Snippet">
+			<section class="featured-products container-fluid">
+				<h1>You May Also Like</h1>
+				<ul class="row featured-products-container">
+				</ul>
+			</section>
+		</template>
+
+		<template id="insert_image_full" inherit_id="website.snippets" name="Full With Image">
+  			<xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+				<t t-snippet="theme_vendere.snippet_image_full"/>
+  			</xpath>
+  			<xpath expr="//div[@id='snippet_feature']/div[@class='o_panel_body']" position="inside">
+  				<t t-snippet="theme_vendere.snippet_featured_categories"/>
+  				<t t-snippet="theme_vendere.snippet_featured_products"/>
+  			</xpath>
+		</template>
+
+	</data>
+</odoo>

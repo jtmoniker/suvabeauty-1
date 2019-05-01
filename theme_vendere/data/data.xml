@@ -1,0 +1,25 @@
+<odoo>
+	<data>
+
+	<!-- 	<record id="navbar-banner" model="ir.ui.view">
+			<field name="customize_show">True</field>
+			<field name="active">True</field>
+		</record>
+
+		<record id="affix_top_menu" model="ir.ui.view">
+			<field name="customize_show">True</field>
+			<field name="active">True</field>
+		</record>
+
+		<record id="vendere_products_list_view" model="ir.ui.view">
+			<field name="customize_show">True</field>
+			<field name="active">True</field>
+		</record>
+
+		<record id="vendere_products_quick_view" model="ir.ui.view">
+			<field name="customize_show">True</field>
+			<field name="active">True</field>
+		</record>
+ -->
+	</data>
+</odoo>

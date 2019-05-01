@@ -1,0 +1,109 @@
+<odoo>
+	<data>
+
+		<template id="vendere_product" inherit_id="website_sale.product">
+			<xpath expr="//section/div[1]/div[1]" position="attributes">
+				<attribute name="class">col-md-6</attribute>
+			</xpath>
+			<xpath expr="//section/div[1]/div[2]" position="replace">
+			</xpath>
+			<xpath expr="//ol[@class='breadcrumb']/li[1]" position="replace">
+				<li class="breadcrumb-item first">
+					<a href="/">Home</a>
+				</li>
+			</xpath>
+			<xpath expr="//ol[@class='breadcrumb']/li[2]" position="replace">
+				<t t-if="len(categories)">
+					<t t-foreach="categories" t-as="cat">
+						<li t-if="cat.parent_id" class="breadcrumb-item">
+							<a t-att-href="keep('/shop/category/%s' % slug(cat), category=0)" t-field="cat.name" />
+						</li>
+					</t>
+				</t>
+			</xpath>
+			<xpath expr="//section[@id='product_detail']/div[2]/div[1]" position="attributes">
+				<attribute name="class">col-lg-6</attribute>
+			</xpath>
+			<xpath expr="//div[@id='product_details']" position="attributes">
+				<attribute name="class">col-lg-6</attribute>
+			</xpath>
+			<xpath expr="//div[@id='product_details']/p[@class='text-muted']" position="before">
+				<ul id="product_share" style="list-style: none;">
+					<li>
+						<a t-attf-href="https://www.facebook.com/sharer/sharer.php?u=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.twitter.com/share?text=?url=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.pinterest.com/pin/create/button/?url=#{request.httprequest.url_root}website/image/product.template/#{product.id}/image" target="_blank">
+							<i class="fa fa-pinterest"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://plus.google.com.com/share?url=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-google-plus"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.linkedin.com.com/cws/share?url=#{request.httprequest.url}" title="Follow us on linkedin" target="_blank">
+							<i class="fa fa-linkedin"></i>
+						</a>
+					</li>
+				</ul>
+				<hr/>
+			</xpath>
+			<xpath expr="//h1[@itemprop='name']" position="after">
+				<h3><t t-esc="product.public_categ_ids[0].name"/></h3>
+				<t t-call="theme_vendere.vendere_product_list_rating">
+					<t t-set="p" t-value="product"/>
+				</t>
+				<hr style="padding: 0"/>
+					<span>Product Code: <span style="color: #a7a6a7"><t t-esc="product.default_code"/></span></span>
+				<hr/>
+			</xpath>
+			<xpath expr="//div[@class='js_product js_main_product']/t[@t-call='website_sale.product_price']" position="replace"></xpath>
+			<xpath expr="//div[@class='js_product js_main_product']/t[1]" position="before">
+				<t t-call="website_sale.product_price"/>
+			</xpath>
+			<xpath expr="//section[@id='product_detail']" position="inside">
+					<ul class="nav nav-tabs" style="margin-bottom: 25px;">
+					  <li t-if="product.website_long_description" class="nav-item"><a t-attf-class="nav-link {{ 'active' if product.website_long_description else '' }}" data-toggle="tab" href="#prod_description">Description</a></li>
+					  <li t-if="product.product_instructions" class="nav-item"><a t-attf-class="nav-link {{ 'active' if not product.website_long_description else '' }}" data-toggle="tab" href="#prod_instructions">How to Use</a></li>
+					</ul>
+					<div class="tab-content">
+					  <div id="prod_description" class="tab-pane fade show active">
+					    <div t-field="product.website_long_description"/>
+					  </div>
+					  <div id="prod_instructions" t-attf-class="{{ 'tab-pane fade in active' if not product.website_long_description else 'tab-pane fade' }}" style="font-size: 1.25em">
+					  	<div t-field="product.product_instructions"/>
+					  </div>
+					</div>
+			</xpath>
+		<!-- 	<xpath expr="//div[@id='product_full_description']" position="after">
+				<t t-set="rating_count" t-value="product.rating_get_stats()['total']"/>
+				<div id="product_reviews" class="container">
+					<h2 style="margin-bottom: 45px;">REVIEWS</h2>
+					<div id="product_review_container" style="border: 1px solid #d7d7d7; padding: 25px; margin-bottom: 50px;">
+						<h2>CUSTOMER REVIEWS</h2>
+						<div t-if="not rating_count" style="display: flex; flex-direction: row; justify-content: space-between">
+							<p>No reviews yet</p>
+							<a href='#'>
+								Write a review
+							</a>
+						</div>
+					</div>
+				</div>
+			</xpath> -->
+			<xpath expr="//div[@id='product_full_description']" position="attributes">
+				<attribute name="style">display: none;</attribute>
+			</xpath>
+
+		</template>
+
+	</data>
+</odoo>
