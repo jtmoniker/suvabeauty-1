@@ -63,7 +63,7 @@
                                             <t t-set="has_mega" t-value="submenu.has_mega"/>
                                         </t>
                                     </t>
-                                    <li class="nav-item js_usermenu">
+                                    <li class="nav-item js_usermenu" t-if="not user_id._is_public()">
                                         <a id="o_logout" class="nav-link" t-attf-href="/web/session/logout?redirect=/" role="menuitem">LOGOUT</a>
                                     </li>
                                 </ul>
