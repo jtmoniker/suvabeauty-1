@@ -15,7 +15,7 @@ PPR = 4
 class WebsiteSaleVendere(WebsiteSale):
 
 	@http.route()
-	def shop(self, page=0, category=None, search='', ppg=False, show_list=False, **post):
+	def shop(self, page=0, category=None, search='', ppg=False, show_list=False, tag=None, **post):
 		render = super(WebsiteSaleVendere, self).shop(page, category, search, PPG, **post)
 
 		# IDENTIFY WEBSITE THEME
@@ -28,8 +28,13 @@ class WebsiteSaleVendere(WebsiteSale):
 
 			render.qcontext['math'] = math
 
-			if search or show_list:
+			if show_list:
 				render.qcontext['show_list'] = True
+
+			if tag:
+				product_tag = request.env['product.template.tag'].browse(int(tag))
+				tag_products = Products.search([('meta_tags','in',int(tag))])
+				render.qcontext['products'] = tag_products
 
 			if category:
 				category = request.env['product.public.category'].browse(int(category)) if type(category) is str else category

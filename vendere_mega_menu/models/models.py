@@ -7,6 +7,7 @@ class WebsiteProductCategories(models.Model):
 	_inherit = "product.public.category"
 
 	mega_image = fields.Binary('Mega Menu Image')
+	mega_exclude = fields.Boolean('Exclude from Mega Menu')
 
 class WebsiteMenu(models.Model):
 
@@ -39,31 +40,29 @@ class WebsiteMenu(models.Model):
 class VendereMegaMenu(models.Model):
 
 	_name = "vendere.mega.menu"
-	_inherit = "website.menu"
 
+	name = fields.Char("Mega menu Name")
 	mega_type = fields.Selection([
-		('shop', 'Shop Menu'),
-		('tag', 'Product Tag')
+		('shop', 'Product Category'),
+		('meta', 'Meta Information')
 	], string="Mega Menu Type")
-	columns = fields.Selection([
-		('three', 3),
-		('four', 4)
-	], string="Number of Columns")
 	menu_base_id = fields.Many2one('website.menu', string="Base Menu")
+
+	meta_tags = fields.Many2many('product.template.tag', string="Meta Tags to Display")
 
 	@api.model
 	def get_product_categories(self):
 		Categs = self.env['product.public.category'].sudo().search([])
-		Parents = Categs.filtered(lambda c: not c.parent_id)
+		Parents = Categs.filtered(lambda c: not c.parent_id and not c.mega_exclude)
 		categs = []
-		if self.columns == 'three':
-			for parent in Parents:
-				res = {'parent': {'name': parent.name, 'id': parent.id, 'record': parent}, 'children': [],}
-				for child in parent.child_id:
+		for parent in Parents:
+			res = {'parent': {'name': parent.name, 'id': parent.id, 'record': parent}, 'children': [],}
+			for child in parent.child_id:
+				if not child.mega_exclude:
 					res['children'].append({
 						'name': child.name,
 						'id': child.id,
 					})
-				categs.append(res)
+			categs.append(res)
 
 		return categs

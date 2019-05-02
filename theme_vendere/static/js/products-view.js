@@ -4,11 +4,37 @@ odoo.define('vendere.Products', function(require) {
 	var rpc = require('web.rpc');
 
 	$('button.grid-view').on('click', (e) => {
-		window.location.href = window.location.pathname;
+		var href = window.location.href
+		var url_parts = href.split('?')
+		if (url_parts.length >= 2) {
+			var url_base = url_parts.shift();
+			var queryString = url_parts.join('?');
+			var prefix = 'show_list=';
+			var parts = queryString.split(/[&;]/g);
+
+			for (var i = 0; i < parts.length; i++) {
+				if (parts[i].indexOf(prefix) >= 0) {
+					parts.splice(i, 1);
+				}
+			}
+
+			url = url_base + '?' + parts.join('&');
+			window.location.href = url;
+
+		}
 	});
 
 	$('button.list-view').on('click', (e) => {
-		window.location.href = window.location.pathname + '?show_list=1';
+		var arg_indicator = window.location.href.indexOf("?");
+		var show_exists = window.location.href.indexOf("show_list");
+		if (arg_indicator < 0 ) {
+			window.location.href = window.location.href + '?show_list=1';
+		} else {
+			if (show_exists < 0) {
+				window.location.href = window.location.href + '&show_list=1';
+			}
+		}
+		
 	});
 
 	$('div.prod-img > a').hover(function(e) {
