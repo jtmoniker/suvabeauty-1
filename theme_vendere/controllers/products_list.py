@@ -101,4 +101,28 @@ class WebsiteSaleVendere(WebsiteSale):
 		render.qcontext['categories'] = list(reversed(categories))
 		return render
 
+	def _get_search_domain(self, search, category, attrib_values):
+		domain = super(WebsiteSaleVendere, self)._get_search_domain(search, category, attrib_values)
+		if search:
+			for s_index, srch in enumerate(search.split(" ")):
+				insert_locations = []
+				locations = list(ind for ind, val in enumerate(domain) if val == '|')
+				for index,location in enumerate(locations):
+					try:
+						if locations[index + 1] - location > 1:
+							insert_locations.append(location)
+					except:
+						insert_locations.append(location)
+						break
+
+				domain.insert(insert_locations[s_index] + 1, ('website_description', 'ilike', srch))
+				domain.insert(insert_locations[s_index] + 1, ('ecommerce_tag.name', 'ilike', srch))
+				domain.insert(insert_locations[s_index] + 1, ('finish_id.name', 'ilike', srch))
+				domain.insert(insert_locations[s_index] + 1, '|')
+				domain.insert(insert_locations[s_index] + 1, '|')
+				domain.insert(insert_locations[s_index] + 1, '|')
+
+		return domain
+
+
 
