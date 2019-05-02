@@ -71,7 +71,8 @@
               <group colspan="1" string="Specifications">
                 <field name="default_code" readonly="1"/>
                 <field name="public_categ_ids" widget="many2many_tags"/>
-                <field name="ecommerce_tag"/>
+                <field name="ecommerce_tag" string="Sortable Tag"/>
+                <field name="meta_tags" widget="many2many_tags"/>
                 <field name="finish_id"/>
               </group>
             </group>
