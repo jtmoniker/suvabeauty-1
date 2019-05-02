@@ -13,6 +13,7 @@ odoo.define('theme_vendere.Navbar', function(require) {
 		} else {
 			window.setTimeout(function() {
 				$search.toggleClass('active');
+				$el.find('div.search-dropdown input').focus()
 			}, 10);
 			$search.toggleClass('show-search');
 		}
