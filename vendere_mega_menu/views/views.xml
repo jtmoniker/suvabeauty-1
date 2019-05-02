@@ -30,7 +30,8 @@
       <field name="model">product.public.category</field>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='sequence']" position="after">
-          <field name="mega_image" widget="image"/>
+          <field name="mega_exclude"/>
+          <field name="mega_image" widget="image" attrs="{'invisible': [('mega_exclude','=',True)]}"/>
         </xpath>
       </field>
     </record>
@@ -44,16 +45,11 @@
             <h1>
               <field name="name"/>
             </h1>
-            <group col="2">
-              <group colspan="1">
-                <field name="mega_type"/>
-              </group>
-              <group colspan="1">
-                <field name="columns"/>
-              </group>
-              <group colspan="2">
-                <field name="child_id"/>
-              </group>
+            <group>
+              <field name="mega_type"/>
+            </group>
+            <group>
+              <field name="meta_tags" attrs="{'invisible': [('mega_type','!=','meta')]}" widget="many2many_tags"/>
             </group>
           </sheet>
         </form>

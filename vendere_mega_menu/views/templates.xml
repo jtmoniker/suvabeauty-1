@@ -85,9 +85,24 @@
             </div>
         </template>
 
+        <template id="meta-mega-menu" name="Tag Mega Menu">
+            <div class="v-mega-container v-mega-meta row">
+                <t t-foreach="mm.meta_tags" t-as="tag">
+                    <a class="v-mega-meta-box col-4" t-att-href="'/shop?tag=%s' % tag.id">
+                        <h6 class="v-meta-name"><t t-esc="tag.name"/></h6>
+                        <img class="v-meta-img img img-fluid rounded" t-att-src="'/web/image/product.template.tag/%s/image' % tag.id"/>
+                    </a>
+                </t>
+            </div>
+        </template>
+
         <template id="mega-menu-controller" name="Mega Menu Controller">
-            <t t-call="vendere_mega_menu.shop-mega-menu" t-if="mm.mega_type == 'shop' and mm.columns == 'three' and size == 'lg'"/>
-            <t t-call="vendere_mega_menu.shop-mega-menu-sm" t-if="mm.mega_type == 'shop' and mm.columns == 'three' and size == 'sm'"/>
+            <t t-call="vendere_mega_menu.shop-mega-menu" t-if="mm.mega_type == 'shop' and size == 'lg'"/>
+            <t t-call="vendere_mega_menu.shop-mega-menu-sm" t-if="mm.mega_type == 'shop' and size == 'sm'"/>
+            <t t-call="vendere_mega_menu.meta-mega-menu" t-if="mm.mega_type == 'meta' and size == 'lg'">
+                <t t-set="mm" t-value="mm"/>
+            </t>
+           <!--  <t t-call="vendere_mega_menu.tag-mega-menu-sm" t-if="mm.mega_type == 'tag' and size == 'sm'"/> -->
         </template>
 
         <!-- Link Mega Menu to Website Menu -->

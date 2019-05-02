@@ -38,7 +38,7 @@ odoo.define('vendere.megaMenu', function(require) {
 	// 	}
 	// });
 
-	$(document).on('click', 'div.v-mega-shop div.v-mega-parent button', function(e) {
+	$(document).on('click', 'div.v-mega-container div.v-mega-parent button', function(e) {
 		$(e.currentTarget).addClass('active');
 		$(e.currentTarget).siblings('.active').removeClass('active');
 
