@@ -18,6 +18,7 @@ class ProductTag(models.Model):
 
 	name = fields.Char('Tag Name')
 	sequence = fields.Integer('Sequence')
+	image = fields.Binary('Tag Image')
 
 class ProductCategories(models.Model):
 
@@ -30,7 +31,8 @@ class ProductTemplate(models.Model):
 	_inherit="product.template"
 	_order = "sequence asc"
 
-	ecommerce_tag = fields.Many2one('product.template.tag', string="Ecommerce Tag")
+	ecommerce_tag = fields.Many2one('product.template.tag', string="Ecommerce Tag", help="Product tag that can be used to sort a product on the product category page.")
+	meta_tags = fields.Many2many('product.template.tag', string="Meta Tags", help="Product Tags that can be used to sort products into 'meta' categories which can be accessed via a meta mega menu.")
 	finish_id = fields.Many2one('product.finish', string="Finish Type")
 
 	website_long_description = fields.Html('Long Description', sanitize=False)
