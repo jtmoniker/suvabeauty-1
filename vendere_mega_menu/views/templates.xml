@@ -1,0 +1,173 @@
+<odoo>
+    <data>
+
+        <!-- Mega Menu Templates -->
+
+        <!-- Mega Menu Architectures -->
+
+        <template id="shop-mega-menu-sm" name="Responsive Shop Mega Menu SM">
+            <t t-set="categs" t-value="mm.get_product_categories()"/>
+            <t t-foreach="categs" t-as="categ">
+                <li t-attf-class="nav-item dropdown">
+                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">
+                        <t t-esc="categ['parent']['name']"/>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <t t-if="len(categ['children'])">
+                            <t t-foreach="categ['children']" t-as="child">
+                                <li class="nav-item">
+                                    <a t-attf-href="/shop/category/#{child['id']}" class="dropdown-item">
+                                        <t t-esc="child['name']"/>
+                                    </a>
+                                </li>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <li class="nav-item">
+                                <a t-attf-href="/shop/category/#{categ['parent']['id']}" class="dropdown-item">
+                                    <t t-esc="categ['parent']['name']"/>
+                                </a>
+                            </li>
+                        </t>
+                        <li class="nav-item mega-shop-img-sm">
+                            <t t-set="categ_id" t-value="categ['parent']['id']"/>
+                            <img t-attf-class="img img-fluid rounded" t-att-src="'/web/image/product.public.category/%s/mega_image' % categ_id"/>
+                        </li>
+                    </ul>
+                </li>
+            </t>
+        </template>
+
+        <template id="shop-mega-menu" name="Responsive Shop Mega Menu LG">
+            <t t-set="categs" t-value="mm.get_product_categories()"/>
+
+            <div class="v-mega-container v-mega-shop row">
+                <div class="v-mega-parent tab col-md-4 col-sm-12">
+                    <t t-set="counter" t-value="0"/>
+                    <t t-foreach="categs" t-as="categ">
+                        <button t-attf-class="#{'active' if not counter else ''} v-menu-item tablinks" t-attf-data-selector="categ_#{categ['parent']['id']}">
+                            <t t-esc="categ['parent']['name']"/>
+                        </button>
+                        <t t-set="counter" t-value="counter + 1"/>
+                    </t>
+                    <button>
+                        <a href="/shop" class="btn-vendere">
+                            Shop All
+                        </a>
+                    </button>
+                </div>
+                <div class="v-mega-children tab-content-child col-md-4 col-sm-12">
+                    <t t-set="counter" t-value="0"/>
+                    <t t-foreach="categs" t-as="categ">
+                        <t t-if="len(categ['children'])">
+                            <t t-foreach="categ['children']" t-as="child">
+                                <a t-attf-href="/shop/category/#{child['id']}" t-attf-class="categ_#{categ['parent']['id']} #{'active' if not counter else ''} v-menu-item">
+                                    <t t-esc="child['name']"/>
+                                </a>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <a t-attf-href="/shop/category/#{categ['parent']['id']}" t-attf-class="categ_#{categ['parent']['id']} #{'active' if not counter else ''} v-menu-item">
+                                <t t-esc="categ['parent']['name']"/>
+                            </a>
+                        </t>
+                        <t t-set="counter" t-value="counter + 1"/>
+                    </t>
+                </div>
+                <div t-attf-class="v-mega-img tab-content-img col-md-4 col-sm-12">
+                    <t t-set="counter" t-value="0"/>
+                    <t t-foreach="categs" t-as="categ">
+                        <t t-set="categ_id" t-value="categ['parent']['id']"/>
+                        <img t-attf-class="#{'active' if not counter else ''} categ_#{categ_id} img img-fluid rounded" t-att-src="'/web/image/product.public.category/%s/mega_image' % categ_id"/>
+                        <t t-set="counter" t-value="counter + 1"/>
+                    </t>
+                </div>
+            </div>
+        </template>
+
+        <template id="meta-mega-menu" name="Tag Mega Menu">
+            <div class="v-mega-container v-mega-meta row">
+                <t t-foreach="mm.meta_tags" t-as="tag">
+                    <a class="v-mega-meta-box col-4" t-att-href="'/shop?tag=%s' % tag.id">
+                        <h6 class="v-meta-name"><t t-esc="tag.name"/></h6>
+                        <img class="v-meta-img img img-fluid rounded" t-att-src="'/web/image/product.template.tag/%s/image' % tag.id"/>
+                    </a>
+                </t>
+            </div>
+        </template>
+
+        <template id="mega-menu-controller" name="Mega Menu Controller">
+            <t t-call="vendere_mega_menu.shop-mega-menu" t-if="mm.mega_type == 'shop' and size == 'lg'"/>
+            <t t-call="vendere_mega_menu.shop-mega-menu-sm" t-if="mm.mega_type == 'shop' and size == 'sm'"/>
+            <t t-call="vendere_mega_menu.meta-mega-menu" t-if="mm.mega_type == 'meta' and size == 'lg'">
+                <t t-set="mm" t-value="mm"/>
+            </t>
+           <!--  <t t-call="vendere_mega_menu.tag-mega-menu-sm" t-if="mm.mega_type == 'tag' and size == 'sm'"/> -->
+        </template>
+
+        <!-- Link Mega Menu to Website Menu -->
+
+        <template id="vendere_submenu" inherit_id="website.submenu">
+            <xpath expr="//ul[@class='dropdown-menu']" position="attributes">
+                <attribute name="t-if">not has_mega</attribute>
+            </xpath>
+        </template>
+
+        <template id="vendere_submenu_1" inherit_id="website.submenu">
+            <xpath expr="//li[1]" position="attributes">
+                <attribute name="t-if">submenu.is_visible and not has_visible_submenu and not has_mega</attribute>
+            </xpath>
+        </template>
+
+        <template id="vendere_submenu_2" inherit_id="website.submenu">
+            <xpath expr="//li[2]" position="attributes">
+                <attribute name="t-if">has_visible_submenu and not has_mega</attribute>
+            </xpath>
+        </template>
+
+        <template id="vendere_mega_container" inherit_id="website.submenu">
+            <xpath expr="//li[2]" position="after">
+                <li t-if="has_mega" t-attf-class="#{item_class or ''} mega-menu">
+                    <a href="#" t-attf-class="#{link_class or ''}">
+                        <span t-field="submenu.name"/>
+                    </a>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="vendere_mega_container" inherit_id="website.submenu">
+            <xpath expr="//li[2]" position="after">
+                <li t-if="has_mega" t-attf-class="#{item_class or ''} dropdown mega-menu d-none d-lg-flex">
+                    <a t-attf-class="#{link_class or ''} dropdown-toggle">
+                        <span t-field="submenu.name"/>
+                    </a>
+                    <section class="dropdown-menu container menu-arch">
+                        <t t-call="vendere_mega_menu.mega-menu-controller">
+                            <t t-set="size" t-value="'lg'"/>
+                            <t t-set="mm" t-value="submenu.mega_menu_id"/>
+                        </t>
+                    </section>
+                </li>
+                <li t-if="has_mega" t-attf-class="#{item_class or ''} dropdown mega-menu d-lg-none">
+                    <a t-attf-class="#{link_class or ''} dropdown-toggle" href="#">
+                        <span t-field="submenu.name"/>
+                    </a>
+                    <ul class="dropdown-menu menu-arch" role="menu">
+                        <t t-call="vendere_mega_menu.mega-menu-controller">
+                            <t t-set="size" t-value="'sm'"/>
+                            <t t-set="mm" t-value="submenu.mega_menu_id"/>
+                        </t>
+                    </ul>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="vendere_mega_menu_assets" name="Vendere Mega Menu Assets" inherit_id="website.assets_frontend">
+            <xpath expr="link[last()]" position="after">
+                <link rel="stylesheet" type="text/scss" href="/vendere_mega_menu/static/src/scss/mega-menu.scss"/>
+                <script type="text/javascript" src="/vendere_mega_menu/static/src/js/mega-menu.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

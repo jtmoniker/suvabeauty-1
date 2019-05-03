@@ -1,0 +1,240 @@
+<odoo>
+	<data>
+
+		<template id="vendere_product_list_rating" name="Theme Products">
+			<t t-set="avg_rating" t-value="p.rating_get_stats()['avg']"/>
+			<t t-set="rating_count" t-value="p.rating_get_stats()['total']"/>
+			<t t-set="val_integer" t-value="math.floor(avg_rating)"/>
+			<t t-set="val_decimal" t-value="avg_rating - val_integer"/>
+			<t t-set="empty_star" t-value="5 - (val_integer+math.ceil(val_decimal))"/>
+			<div class="o_website_rating_static">
+				<t t-foreach="range(val_integer)" t-as="num">
+					<i style="font-size: 1.2em;" class="fa fa-star" role="img" aria-label="One star" title="One star"></i>
+				</t>
+				<t t-if="val_decimal">
+					<i style="font-size: 1.2em;" class="fa fa-star-half-o" role="img" aria-label="Half a star" title="Half a star"></i>
+				</t>
+				<t t-foreach="range(empty_star)" t-as="num" role="img" t-attf-aria-label="#{empty_star} on 5" t-attf-title="#{empty_star} on 5">
+					<i style="font-size: 1.2em;" class="fa fa-star-o"></i>
+				</t><span style="color: black; font-size: 1.2em;">  (<t t-esc="rating_count"/>)</span>
+			</div>
+		</template>
+
+		<template id="products_sort" name="Sort By">
+			<t t-set="list_price_desc_label">Catalog price: High to Low</t>
+			<t t-set="list_price_asc_label">Catalog price: Low to High</t>
+			<t t-set="name_asc_label">Name - A to Z</t>
+			<t t-set="name_desc_label">Name - Z to A</t>
+			<t t-set="website_sale_sortable" t-value="[
+				(list_price_desc_label, 'list_price desc'),
+				(list_price_asc_label, 'list_price asc'),
+				(name_asc_label, 'name asc'),
+				(name_desc_label, 'name desc')
+			]"/>
+			<t t-set="website_sale_sortable_current" t-value="[sort for sort in website_sale_sortable if sort[1]==request.params.get('order', '')]"/>
+			<div t-if="show_list" class="dropdown ml-2 dropdown_sorty_by">
+				<a role="button" href="#" class="dropdown-toggle btn btn-secondary" data-toggle="dropdown">
+					<t t-if='len(website_sale_sortable_current)'>
+						<span>Sorting by : <t t-raw='website_sale_sortable_current[0][0]'/></span>
+					</t>
+					<t t-else='1'>
+						<span>Sort By...</span>
+					</t>
+				</a>
+				<div class="dropdown-menu" role="menu">
+					<t t-foreach="website_sale_sortable" t-as="sortby">
+						<a role="menuitem" t-att-href="keep('/shop', order=sortby[1], show_list=True)" class="dropdown-item">
+							<span t-raw="sortby[0]"/>
+						</a>
+					</t>
+				</div>
+			</div>
+		</template>
+
+	<!-- Vendere Products Grid -->
+
+		<template id="vendere_products_head" inherit_id="website_sale.products">
+			<xpath expr="//div[hasclass('oe_website_sale')]/div[1]" position="replace">
+				<div class="products_header">
+					<div id="products_category" class="row">
+						<h1>
+							<t t-if="category" t-esc="category.name"/>
+							<t t-else="">
+								All Products
+							</t>
+						</h1>
+					</div>
+					<t t-if="category">
+						<div t-if="not grid"  id="products_function" class="row">
+							<div class="col-md-6 col-6 function-left">
+								<t t-if="show_list">
+									<t t-call="theme_vendere.products_sort"/>
+								</t>
+							</div>
+							<div class="col-md-6 col-6 function-right">
+								<a title="Grid view" class="change-view" data-view="grid">
+									<button t-attf-class="grid-view #{'active' if not show_list else ''}">
+										<i class="fa fa-th"></i>
+									</button>
+								</a>
+								<a title="List View" class="change-view" data-view="list">
+									<button t-attf-class="list-view #{'active' if show_list else ''}">
+										<i class="fa fa-list-ul"></i>
+									</button>
+								</a>
+							</div>
+						</div>
+					</t>
+					<t t-else="">
+						<div id="products_function" class="row">
+							<div class="col-md-6 col-6 function-left">
+								<t t-if="show_list">
+									<t t-call="theme_vendere.products_sort"/>
+								</t>
+							</div>
+							<div class="col-md-6 col-6 function-right">
+								<a title="Grid view" class="change-view" data-view="grid">
+									<button t-attf-class="grid-view #{'active' if not show_list else ''}">
+										<i class="fa fa-th"></i>
+									</button>
+								</a>
+								<a title="List View" class="change-view" data-view="list">
+									<button t-attf-class="list-view #{'active' if show_list else ''}">
+										<i class="fa fa-list-ul"></i>
+									</button>
+								</a>
+							</div>
+						</div>
+					</t>
+				</div>
+			</xpath>
+		</template>
+
+		<template id="vendere_products_foot" inherit_id="website_sale.products">
+			<xpath expr="//div[hasclass('oe_website_sale')]/div[3]" position="replace">
+				<t t-if="category">
+					<t t-if="not grid">
+						<div class="products_pager form-inline justify-content-center mt-3">
+	                        <t t-call="website.pager"/>
+	                    </div>
+					</t>
+				</t>
+				<t t-else="">
+					<div class="products_pager form-inline justify-content-center mt-3">
+	                    <t t-call="website.pager"/>
+	                </div>
+				</t>
+			</xpath>
+		</template>
+
+		<template id="vendere_products_card">
+			<!-- Variables -->
+
+			<t t-set="product_href" t-value="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))" />
+			<t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
+			<t t-set="combination_info" t-value="product._get_combination_info(first_possible_combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+			<t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+			<t t-set="secondary_img" t-value="product._get_secondary_img() or ''"/>
+			<t t-set="style_html" t-value="product._get_style_classes() or ''"/>
+
+			<div t-attf-class="prod-wrap oe_product #{style_html}">
+				<form action="/shop/cart/update" method="post">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+					<div itemscope="itemscope" itemtype="http://schema.org/Product">
+						<div class="ribbon-wrapper">
+		                    <a href="#" role="button" class="ribbon btn btn-danger">Sale</a>
+		                </div>
+						<div class="prod-img">
+							<a t-attf-href="/shop/product/#{product.id}">
+								<img class="img img-fluid rounded" t-attf-src="/website/image/product.template/#{product.id}/image" t-attf-data-secondary="#{secondary_img}" t-attf-data-primary="#{product.id}"/>
+							</a>
+						</div>
+						<div class="prod-content">
+							<h6 class="prod-categ"><t t-esc="product.public_categ_ids[0].name"/></h6>
+							<h5 class="prod-name"><t t-esc="product.name"/></h5>
+							<h6 t-if="not show_publish and not product.website_published">
+								<a role="button" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+							</h6>
+							<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+								<b>
+									<t t-if="True"><!-- compatibility 12.0 -->
+										<del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+									</t>
+									<span t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+									<span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+									<span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+									<t t-call="theme_vendere.vendere_product_list_rating">
+										<t t-set="p" t-value="product"/>
+									</t>
+								</b>
+								<t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
+								<input name="product_id" t-att-value="product_variant.id" type="hidden" />
+								<div class="prod_actions">
+									<t t-if="product._is_add_to_cart_possible()">
+										<a href="#" role="button" class="btn btn-secondary btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
+											<i class="fa fa-shopping-bag"></i><span>ADD TO CART</span>
+										</a>
+									</t>
+									<a type='button' class="quickview" t-attf-data-product-id="#{product.id}">
+										<i class="fa fa-eye"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>	
+			</div>
+		</template>
+
+		<template name="Theme Options" id="vendere_products_list" inherit_id="website_sale.products">
+			<xpath expr="//div[@id='products_grid']//table" position="replace">
+				<div class="row" id="vendere_products">
+					<t t-if="grid">
+						<t t-foreach="org" t-as="o">
+							<div class="product_org_label" style="display:flex; flex-direction:row; align-items: center; justify-content: space-between; width: 100%; padding: 0 25px; padding-right: 50px;">
+								<h2><t t-esc="o['org'].name"/></h2>
+								<a class="organize_collapse" data-toggle="collapse" t-attf-href="#collapse_#{o['org'].id}" role="button"> 
+									<i class="fa fa-plus"></i>
+								</a>
+							</div>
+							<div t-attf-id="collapse_#{o['org'].id}" class="row collapse show">
+								<t t-foreach="o['products']" t-as="op">
+									<t t-foreach="op" t-as="product">
+										<div class="col-xl-2dot4 col-lg-3 col-md-4 col-sm-6 col-xs-12" style="text-align:center">
+											<t t-call="theme_vendere.vendere_products_card">
+												<t t-set="product" t-value="product"/>
+											</t>
+										</div>
+									</t>
+								</t>
+							</div>
+							<hr style="margin: 50px 0; border: 0; border-bottom: 2px solid #000; width: 100%;"/>
+						</t>
+					</t>
+					<t t-else="">
+						<t t-foreach="products" t-as="product">
+
+							<!-- List View -->
+
+							<div t-if="show_list" class="oe_product oe_list oe_product_cart" t-att-data-publish="product.website_published and 'on' or 'off'">
+								<t t-call="website_sale.products_item">
+									<t t-set="show_publish" t-value="True" />
+								</t>
+							</div>
+
+
+							<!-- Normal Grid View -->
+
+							<div t-if="not show_list" class="col-xl-2dot4 col-lg-3 col-md-4 col-sm-6 col-xs-12" style="text-align:center">
+								<t t-call="theme_vendere.vendere_products_card">
+									<t t-set="product" t-value="product"/>
+								</t>
+							</div>
+						</t>
+					</t>
+				</div>
+			</xpath>
+		</template>
+
+	</data>
+</odoo>

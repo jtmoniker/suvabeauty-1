@@ -1,0 +1,149 @@
+li.mega-menu {
+	position: static;
+	section {
+		margin-top: 25px;
+		position:relative;
+		display: none;
+		left:30px;
+		opacity: 0;
+		border-radius: 0;
+		border: unset;
+		max-width: 750px;
+		padding: 0;
+		transition: all 0.25s ease-in;
+	}
+	section.open {
+		margin-top: 0px !important;
+		opacity: 1 !important;
+	}
+}
+
+li.mega-menu {
+	a:hover {
+		cursor: pointer;
+	}
+	section {
+		div.v-mega-shop {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			div {
+				flex-grow: 1;
+				flex-shrink: 1;
+				&.v-mega-parent {
+					display: flex;
+					flex-direction: column;
+					button {
+						height: 60px;
+						text-align: left;
+						background: #f6f6f6;
+						border: unset;
+						text-transform: uppercase;
+						padding-left:20px;
+						&.v-menu-item {
+							border-bottom: 1px solid #d7d7d7;
+							transition: all 0.75s ease;
+							&:hover {
+								background: white;
+								color: #e683f6;
+								cursor: pointer;
+							}
+							&:focus,&:active {
+							   outline: none !important;
+							   box-shadow: none;
+							}
+						}
+						&.active {
+							background: white;
+							color: #e683f6;
+						}
+					}
+					a.btn-vendere {
+						border: 1px solid black;
+						padding: 5px 15px;
+						color: black;
+						text-decoration: none;
+					}
+				}
+				&.v-mega-children {
+					display: flex;
+					flex-direction: column;
+					a {
+						display: none;
+						height: 60px;
+						line-height: 60px;
+						text-align: left;
+						border: unset;
+						text-decoration: none;
+						color: black;
+						padding-left: 20px;
+						&.v-menu-item {
+							border-bottom: 1px solid #d7d7d7;
+							transition: all 0.75 ease;
+							&:hover {
+								color: #e683f6;
+								cursor: pointer;
+							}
+							&:focus,&:active {
+							   outline: none !important;
+							   box-shadow: none;
+							}
+						}
+						&.active {
+							display: flex;
+						}
+					}
+				}
+				&.v-mega-img {
+					img {
+						display: none;
+						flex-direction: row;
+						justify-content: center;
+						align-items: center;
+						&.active {
+							display: flex;
+						}
+					}
+				}
+			}
+		}
+		div.v-mega-meta {
+			margin-top: 10px;
+			a.v-mega-meta-box {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				.v-meta-name {
+					margin-right: 25px;
+					color: black;
+					transition: all 0.5s ease;
+				}
+				.v-meta-img {
+					height: 125px;
+				}
+				&:hover {
+					text-decoration: none;
+					.v-meta-name {
+						text-decoration: none;
+						color: #e883f6;
+					}
+				}
+			}
+		}
+	}
+	ul.menu-arch {
+		/*border: unset;
+		ul {
+			border: unset;
+		}*/
+		li.mega-shop-img-sm {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			img {
+				margin-top: 15px;
+			}
+		}
+	}
+}

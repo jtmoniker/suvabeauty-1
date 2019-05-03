@@ -1,0 +1,76 @@
+<odoo>
+	<data>
+
+		<template id="snippet_image_full" name="Full Width Image">
+			<section class="full_image">
+				<img src="/website/static/src/img/backgrounds/cubes.jpg" class="img img-fluid" style="width: 100%"/>
+			</section>
+		</template>
+
+		<template id="snippet_featured_categories" name="Featured Categories Snippet">
+			<section class="featured-categs">
+				<div class="row featured-categ-container">
+				</div>
+			</section>
+		</template>
+
+		<template id="snippet_featured_products" name="Featured Products Snippet">
+			<t t-set="products" t-value="request.env['product.template']._get_featured_products()"/>
+			<section class="featured-products container-fluid">
+				<h1>You May Also Like</h1>
+				<ul class="row featured-products-container">
+					<t t-foreach="products" t-as="product">
+
+						<t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
+						<t t-set="combination_info" t-value="product._get_combination_info(first_possible_combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+						<t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+						<t t-set="secondary_img" t-value="product._get_secondary_img() or ''"/>
+						<t t-set="style_html" t-value="product._get_style_classes() or ''"/>
+						
+						<li t-attf-data-product="#{product.id}">
+							<div class='slider-prod'>
+								<div class="slide-img">
+									<a t-attf-href="/shop/product/#{product.id}">
+										<img class="img img-fluid rounded" t-attf-src="/website/image/product.template/#{product.id}/image"/>
+									</a>
+								</div>
+								<div class="slide-content">
+									<h6 class="prod-categ"><t t-esc="product.public_categ_ids[0].name"/></h6>
+									<h5 class="prod-name"><t t-esc="product.name"/></h5>
+									<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+										<b>
+											<span class="fp-price" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+											<span itemprop="price" style="display:none;"><t t-esc="combination_info['price']"/></span>
+											<t t-call="theme_vendere.vendere_product_list_rating">
+												<t t-set="p" t-value="product"/>
+											</t>
+										</b>
+										<div class="slide-action">
+											<a t-attf-href="/shop/product/#{product.id}" role="button" class="btn btn-secondary btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
+												<span>View Product</span>
+											</a>
+											<a type='button' class="quickview" t-attf-data-product-id="#{product.id}">
+												<i class="fa fa-eye"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</t>
+				</ul>
+			</section>
+		</template>
+
+		<template id="insert_image_full" inherit_id="website.snippets" name="Full With Image">
+  			<xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+				<t t-snippet="theme_vendere.snippet_image_full"/>
+  			</xpath>
+  			<xpath expr="//div[@id='snippet_feature']/div[@class='o_panel_body']" position="inside">
+  				<t t-snippet="theme_vendere.snippet_featured_categories"/>
+  				<t t-snippet="theme_vendere.snippet_featured_products"/>
+  			</xpath>
+		</template>
+
+	</data>
+</odoo>
