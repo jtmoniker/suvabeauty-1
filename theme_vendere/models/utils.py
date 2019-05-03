@@ -1,10 +1,12 @@
+import math
+
 from odoo import models, api, fields
 
 class ThemeDefault(models.AbstractModel):
-    _inherit = 'theme.utils'
+	_inherit = 'theme.utils'
 
-    def _theme_default_post_copy(self, mod):
-        self.disable_view('website_theme_install.customize_modal')
+	def _theme_default_post_copy(self, mod):
+		self.disable_view('website_theme_install.customize_modal')
 
 
 class WebsiteProductCategories(models.Model):
@@ -30,24 +32,22 @@ class ProductTemplate(models.Model):
 	_inherit = "product.template"
 
 	@api.model
-	def get_featured_products(self):
+	def _get_featured_products(self):
 		featured_products = self.env['product.template'].search([('featured_product','=',True),('website_published','=',True)])
-		p_data = []
-		for product in featured_products:
+		return featured_products
+
+	@api.model
+	def update_featured_products(self, ids):
+		res = {}
+		Products = self.env['product.template'].browse(ids)
+		for product in Products:
 			combination = product.sudo()._get_first_possible_combination()
 			price_info = product.sudo()._get_combination_info(combination, add_qty=1)
-			product_variants = product.sudo().product_variant_ids
-			p_data.append({
-				'id': product.id,
-				'name': product.name,
-				'category': product.public_categ_ids[0].name,
+			res[product.id] = {
 				'price': price_info['list_price'],
-				'rating': product.rating_get_stats()['avg'],
-				'rating_count': product.rating_get_stats()['total'],
-				'product_id': product_variants[0].id
-			})
-		return p_data
-
+			}
+		return res
+			
 	@api.model
 	def _get_style_classes(self):
 		html_class = ""
@@ -55,5 +55,15 @@ class ProductTemplate(models.Model):
 			html_class += style.html_class + ' '
 
 		return html_class
+
+class IrUiView(models.Model):
+
+	_inherit = "ir.ui.view"
+
+	@api.model
+	def _prepare_qcontext(self):
+		qcontext = super(IrUiView, self)._prepare_qcontext()
+		qcontext['math'] = math
+		return qcontext
 
 
