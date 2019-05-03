@@ -13,13 +13,13 @@
                 <script type="text/javascript" src="/theme_vendere/static/js/products-quickview.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/products-view.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/navbar.js"></script>
+                <script type="text/javascript" src="/theme_vendere/static/js/featured_products.js"/>
             </xpath>
         </template>
 
         <template id="snippet_js" inherit_id="website.assets_editor" name="Snippet JS">
             <xpath expr="script[last()]" position="after">
                 <script type="text/javascript" src="/theme_vendere/static/js/featured_categories.js"/>
-                <script type="text/javascript" src="/theme_vendere/static/js/featured_products.js"/>
             </xpath>
         </template>
 
