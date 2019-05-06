@@ -64,6 +64,7 @@
               <group colspan="1" string="Basic Configuration">
                 <field name="website_published"/>
                 <field name="inventory_availability"/>
+                <field name="available_threshold" attrs="{'invisible': [('inventory_availability','!=','threshold')]}"/>
                 <field name="alternative_product_ids" widget="many2many_tags"/>
                 <field name="accessory_product_ids" widget="many2many_tags"/>
                 <field name="featured_product"/>
