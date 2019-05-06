@@ -59,6 +59,7 @@
 					<div id="products_category" class="row">
 						<h1>
 							<t t-if="category" t-esc="category.name"/>
+							<t t-elif="tag" t-esc="tag.name"/>
 							<t t-else="">
 								All Products
 							</t>
@@ -136,6 +137,7 @@
 			<t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
 			<t t-set="secondary_img" t-value="product._get_secondary_img() or ''"/>
 			<t t-set="style_html" t-value="product._get_style_classes() or ''"/>
+			<t t-set="forecasted_qty" t-value="product._get_forecasted_qty()"/>
 
 			<div t-attf-class="prod-wrap oe_product #{style_html}">
 				<form action="/shop/cart/update" method="post">
@@ -171,9 +173,16 @@
 								<input name="product_id" t-att-value="product_variant.id" type="hidden" />
 								<div class="prod_actions">
 									<t t-if="product._is_add_to_cart_possible()">
-										<a href="#" role="button" class="btn btn-secondary btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
-											<i class="fa fa-shopping-bag"></i><span>ADD TO CART</span>
-										</a>
+										<t t-if="product.inventory_availability in ['never', 'custom'] or product.inventory_availability == 'always' and forecasted_qty &gt; 0 or product.inventory_availability == 'threshold' and forecasted_qty &gt;= product.available_threshold">
+											<a href="#" role="button" class="btn btn-secondary add-to-cart btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
+												<i class="fa fa-shopping-bag"></i><span>ADD TO CART</span>
+											</a>
+										</t>
+										<t t-else="">
+											<a role="button" class="btn btn-secondary add-to-cart btn-sm">
+												<span>SOLD OUT</span>
+											</a>
+										</t>
 									</t>
 									<a type='button' class="quickview" t-attf-data-product-id="#{product.id}">
 										<i class="fa fa-eye"></i>

@@ -23,6 +23,36 @@ li.mega-menu {
 		cursor: pointer;
 	}
 	section {
+		&.meta {
+			max-width: 500px;
+			div.v-mega-meta {
+				margin-top: 10px;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-evenly;
+				a.v-mega-meta-box {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+					.v-meta-name {
+						margin-right: 25px;
+						color: black;
+						transition: all 0.5s ease;
+					}
+					.v-meta-img {
+						height: 125px;
+					}
+					&:hover {
+						text-decoration: none;
+						.v-meta-name {
+							text-decoration: none;
+							color: #e883f6;
+						}
+					}
+				}
+			}
+		}
 		div.v-mega-shop {
 			display: flex;
 			flex-direction: row;
@@ -107,13 +137,26 @@ li.mega-menu {
 				}
 			}
 		}
-		div.v-mega-meta {
-			margin-top: 10px;
+	}
+	ul.menu-arch {
+		/*border: unset;
+		ul {
+			border: unset;
+		}*/
+		li.mega-shop-img-sm {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			img {
+				margin-top: 15px;
+			}
+		}
+		li.v-meta-mega {
 			a.v-mega-meta-box {
 				display: flex;
 				flex-direction: row;
-				justify-content: center;
 				align-items: center;
+				justify-content: space-between;
 				.v-meta-name {
 					margin-right: 25px;
 					color: black;
@@ -129,20 +172,6 @@ li.mega-menu {
 						color: #e883f6;
 					}
 				}
-			}
-		}
-	}
-	ul.menu-arch {
-		/*border: unset;
-		ul {
-			border: unset;
-		}*/
-		li.mega-shop-img-sm {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			img {
-				margin-top: 15px;
 			}
 		}
 	}

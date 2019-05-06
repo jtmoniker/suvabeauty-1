@@ -207,13 +207,18 @@ div#wrap {
 					@include btn-border-slide(rgba(0,0,0,0), #dddcdd, 2px, 0.5s);
 					&:hover {
 						div.product_price {
-							a.a-submit {
+							a.add-to-cart {
 								opacity: 1 !important;
 							}
 							a.quickview {
 								opacity: 1 !important;
 							}
-
+              a.vendere_wishlist {
+                opacity: 1 !important;
+              }
+              a.o_add_compare {
+                opacity: 1 !important;
+              }
 						}
 					}
           div.ribbon-wrapper {
@@ -242,7 +247,8 @@ div#wrap {
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
-                a.a-submit {
+                margin-bottom: 10px;
+                a.add-to-cart {
                   display: flex;
                   flex-direction: row;
                   justify-content: center;
@@ -283,6 +289,42 @@ div#wrap {
                   }
                 }
               }
+              a.vendere_wishlist {
+                opacity: 0;
+                i {
+                  color: black;
+                  transition: all 0.5s ease;
+                }
+                &:hover {
+                  cursor: pointer;
+                  i {
+                    color: #f06272;
+                  }
+                }
+                &.disabled {
+                  i {
+                    color: #f06272;
+                  }
+                }
+              }
+              a.o_add_compare {
+                opacity: 0;
+                i {
+                  color: black;
+                  transition: all 0.5s ease;
+                }
+                &:hover {
+                  cursor: pointer;
+                  i {
+                    color: #f06272;
+                  }
+                }
+                &.disabled {
+                  i {
+                    color: #f06272;
+                  }
+                }
+              }
 						}
 						div.o_website_rating_static {
 							margin-top: 10px;
@@ -290,7 +332,60 @@ div#wrap {
 						}
 					}
 				}
+        div.oe_list {
+          padding-bottom: 0px;
+          section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0px;
+            height: 100px;
+            h6 {
+              font-size: 1.1em;
+              a {
+                color: #3d4246;
+                &:hover {
+                  text-decoration: none;
+                }
+              }
+            }
+            div.product_price {
+              font-size: 1.1em;
+              color: #3d4246;
+            }
+          }
+        }
 			}
 		}
 	}
+}
+
+div.products_pager {
+  ul.pagination {
+    li.page-item {
+      a.page-link {
+        border: unset;
+        color: black;
+      }
+      &.active {
+        a.page-link {
+          color: white;
+        }
+      }
+      &.disabled {
+        a.page-link {
+          color: grey;
+        }
+      }
+    }
+  }
+}
+
+button.o_add_wishlist {
+  display: none !important;
+}
+
+button.o_add_compare {
+  display: none !important;
 }
