@@ -14,9 +14,17 @@ PPR = 4
 
 class WebsiteSaleVendere(WebsiteSale):
 
-	@http.route()
-	def shop(self, page=0, category=None, search='', ppg=False, show_list=False, tag=None, **post):
+	@http.route([
+        '''/shop''',
+        '''/shop/page/<int:page>''',
+        '''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>''',
+        '''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>/page/<int:page>''',
+        '''/shop/tag/<int:tag_id>''',
+        '''/shop/tag/<int:tag_id>/page/<int:page>'''
+    ])
+	def shop(self, page=0, category=None, search='', ppg=PPG, show_list=False, tag_id=False, **post):
 		render = super(WebsiteSaleVendere, self).shop(page, category, search, PPG, **post)
+		post['context'] = {'website_sale_stock_get_quantity': True}
 
 		# IDENTIFY WEBSITE THEME
 		website_id = request.env.context['website_id']
@@ -31,10 +39,15 @@ class WebsiteSaleVendere(WebsiteSale):
 			if show_list:
 				render.qcontext['show_list'] = True
 
-			if tag:
-				product_tag = request.env['product.template.tag'].browse(int(tag))
-				tag_products = Products.search([('meta_tags','in',int(tag))])
+			if tag_id:
+				product_tag = request.env['product.template.tag'].browse(int(tag_id))
+				url = "/shop/tag/%s" % product_tag.id
+				product_count = len(Products.search([('meta_tags','in',int(tag_id))]))
+				pager = request.website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
+				tag_products = Products.search([('meta_tags','in',int(tag_id))], limit=ppg, offset=pager['offset'], order=self._get_search_order(post))
 				render.qcontext['products'] = tag_products
+				render.qcontext['pager'] = pager
+				render.qcontext['tag'] = product_tag
 
 			if category:
 				category = request.env['product.public.category'].browse(int(category)) if type(category) is str else category

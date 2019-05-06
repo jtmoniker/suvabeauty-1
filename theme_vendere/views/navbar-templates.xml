@@ -3,7 +3,7 @@
 
         <!-- Navbar Templates -->
 
-        <template id="navbar_logo_center" name="Center Logo" inherit_id="website.layout">
+        <template id="navbar_logo_center" name="Center Logo" inherit_id="website.layout" priority="18">
             <xpath expr="//div[@id='wrapwrap']/header/nav" position="replace">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <t t-set="website_sale_order" t-value="website.sale_get_order()" />
@@ -31,7 +31,7 @@
 
                             <ul id="nav-right-sm" class="nav navbar-nav text-right navbar-right d-lg-none">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link search-link">
                                         <i class="fa fa-search"></i>
                                     </a>
                                 </li>
@@ -121,14 +121,6 @@
                 </section>
             </xpath>
         </template>
-
-        <!-- Alter affix menu template to work with modified navbar -->
-
-<!--         <template id="affix_top_menu" customize_show="True" inherit_id="navbar_logo_center" active="True" name="Affix Top Menu">
-            <xpath expr="//header" position="attributes">
-                <attribute name="t-attf-class" add="#{'o_affix_enabled'}" separator=" "/>
-            </xpath>
-        </template> -->
 
     </data>
 </odoo>

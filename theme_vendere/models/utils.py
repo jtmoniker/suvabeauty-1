@@ -2,6 +2,17 @@ import math
 
 from odoo import models, api, fields
 
+class IrModuleModule(models.Model):
+	_inherit = "ir.module.module"
+
+	@api.model
+	def check_installed(self, name):
+		module = self.env['ir.module.module'].sudo().search([('name','=',name)])
+		if module.state == 'installed':
+			return True
+		else:
+			return False
+
 class ThemeDefault(models.AbstractModel):
 	_inherit = 'theme.utils'
 
@@ -55,6 +66,10 @@ class ProductTemplate(models.Model):
 			html_class += style.html_class + ' '
 
 		return html_class
+
+	@api.model
+	def _get_forecasted_qty(self):
+		return self.env['product.template'].sudo().browse(self.id).virtual_available
 
 class IrUiView(models.Model):
 
