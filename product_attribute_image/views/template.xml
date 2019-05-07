@@ -5,6 +5,7 @@
     <template id="product_attribute_image_variants" inherit_id="sale.variants">
         <xpath expr="//t/li/t[last()]" position="after">
             <t t-if="variant_id.attribute_id.type == 'image'">
+                <br/>
                 <ul class="image_attrs list-inline" style="margin-left: 0px; display: inline-flex; flex-direction: row; flex-wrap: wrap;">
                     <t t-set="inc" t-value="0"/>
                     <t t-foreach="variant_id.value_ids" t-as="value_id">
@@ -19,6 +20,12 @@
             </t>
         </xpath>
         <xpath expr="//strong[@class='attribute_name']" position="after">: <span/></xpath>
+    </template>
+
+    <template id="suva_products_attributes" inherit_id="website_sale.products_attributes">
+        <xpath expr="//li" position="attributes">
+            <attribute name="t-if">a.type != 'image' and a.value_ids and len(a.value_ids) &gt; 1</attribute>
+        </xpath>
     </template>
 
     <!-- Cart Page -->
