@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shipstation_cs_user,shipstation.custom.store.user,model_shipstation_custom_store,stock.group_stock_user,1,0,0,0
+access_shipstation_cs_manager,shipstation.custom.store.manager,model_shipstation_custom_store,stock.group_stock_manager,1,1,1,1

@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+
+    <record id="view_delivery_carrier_form_shipstation" model="ir.ui.view">
+      <field name="name">delivery.carrier.form.shipstation</field>
+      <field name="model">delivery.carrier</field>
+      <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='integration_level']" position="before">
+          <field name="shipstation"/>
+          <field name="ss_custom_store" attrs="{'invisible': [('shipstation','=',False)], 'required': [('shipstation','=',True)]}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_shipstation_custom_store_form" model="ir.ui.view">
+      <field name="name">shipstation.custom.store.form</field>
+      <field name="model">shipstation.custom.store</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="username"/>
+                <field name="password" password="True"/>
+                <field name="endpoint"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_shipstation_custom_store_list" model="ir.ui.view">
+      <field name="name">shipstation.custom.store.list</field>
+      <field name="model">shipstation.custom.store</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="endpoint"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_picking_shipstation_out_form" model="ir.ui.view">
+      <field name="name">shipstation.picking.form</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='tracking']" position="after">
+          <field name="ss_carrier"/>
+          <field name="ss_service"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="action_shipstation_custom_store" model="ir.actions.act_window">
+      <field name="name">Shipstation Custom Stores</field>
+      <field name="res_model">shipstation.custom.store</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id="menu_shipstation" name="Shipstation Custom Stores" parent="delivery.menu_delivery" action="action_shipstation_custom_store" />
+
+  </data>
+</odoo>
