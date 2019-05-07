@@ -28,7 +28,7 @@
                 <script type="text/javascript" src="/theme_vendere/static/js/lightslider.js"></script>
                 <script type="text/javascript">
                     $(document).ready(function(){
-                      $('.featured-products-container').lightSlider({
+                      $('.slider-products-container').lightSlider({
                         item: 5,
                         autoWidth: true,
                         pager: false,

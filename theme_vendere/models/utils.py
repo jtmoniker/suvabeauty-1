@@ -9,7 +9,24 @@ class IrModuleModule(models.Model):
 	def check_installed(self, name):
 		module = self.env['ir.module.module'].sudo().search([('name','=',name)])
 		if module.state == 'installed':
-			return True
+			xml_id = False
+			view = False
+			if name == 'website_sale_wishlist':
+				xml_id = self.env['ir.model.data'].sudo().search([('module','=','website_sale_wishlist'),('name','=','add_to_wishlist')])
+			else:
+				xml_id = self.env['ir.model.data'].sudo().search([('module','=','website_sale_comparison'),('name','=','add_to_compare')])
+
+			if xml_id:
+				res_id = xml_id.res_id
+				view = self.env['ir.ui.view'].sudo().browse(res_id)
+				print(view.name)
+				print(view.active)
+				active = view.active
+
+			if view and active:
+				return True
+			else:
+				return False
 		else:
 			return False
 
@@ -48,12 +65,12 @@ class ProductTemplate(models.Model):
 		return featured_products
 
 	@api.model
-	def update_featured_products(self, ids):
+	def update_featured_products(self, ids, website_id):
 		res = {}
 		Products = self.env['product.template'].browse(ids)
 		for product in Products:
 			combination = product.sudo()._get_first_possible_combination()
-			price_info = product.sudo()._get_combination_info(combination, add_qty=1)
+			price_info = product.with_context(website_id=int(website_id)).sudo()._get_combination_info(combination, add_qty=1)
 			res[product.id] = {
 				'price': price_info['list_price'],
 			}

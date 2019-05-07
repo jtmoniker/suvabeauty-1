@@ -12,14 +12,20 @@ odoo.define('theme_vendere.featuredProducts', function(require) {
 	});
 
 	if (products.length) {
-		rpc.query({
-			model: 'product.template',
-			method: 'update_featured_products',
-			args: [products],
-		}).then(function(data) {
-			$slides.each(function(idx, li) {
-				product_id = $(li).data()['product'];
-		    	$(li).find('span.fp-price .oe_currency_value').text(data[product_id]['price'].toFixed(2))
+		$.ajax({
+			url: `/pricelist`,
+			method: 'GET',
+		}).then((webData) => {
+			website = JSON.parse(webData);
+			rpc.query({
+				model: 'product.template',
+				method: 'update_featured_products',
+				args: [products, website['id']],
+			}).then(function(data) {
+				$slides.each(function(idx, li) {
+					product_id = $(li).data()['product'];
+			    	$(li).find('span.fp-price .oe_currency_value').text(data[product_id]['price'].toFixed(2))
+				});
 			});
 		});
 	}

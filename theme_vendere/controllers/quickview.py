@@ -31,3 +31,11 @@ class QuickviewData(http.Controller):
 			}
 
 			return json.dumps(content)
+
+	@http.route('/pricelist', type='http', auth='public', website=True)
+	def get_pricelist_from_request(self):
+		website = request.website
+		if website:
+			return json.dumps({
+				'id': website.id
+			})
