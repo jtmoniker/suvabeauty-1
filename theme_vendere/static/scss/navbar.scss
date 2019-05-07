@@ -143,6 +143,29 @@ header {
 							cursor: pointer;
 						}
 					}
+					div.dropdown.ml-2 {
+						display: flex;
+						align-items: center;
+						height: 100px;
+						a {
+							background: none;
+							border: none;
+							color: black;
+							padding: 4px;
+							&:focus {
+								box-shadow: none;
+							}
+						}
+						div.dropdown-menu {
+							min-width: 50px;
+							a {
+								text-align: center;
+								&:hover {
+									background: #f8f9fa;
+								}
+							}
+						}
+					}
 				}
 				li.divider {
 					border-color: #d7d7d7;

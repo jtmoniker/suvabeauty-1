@@ -4,12 +4,11 @@
 		<!-- Navbar Wishlist -->
 
          <template id="wishlist-header" name="Vendere Wishlist Header" inherit_id="theme_vendere.navbar_logo_center">
-                <xpath expr="//ul[@id='nav-right-lg']/li[2]/div/a[1]" position="after">
-                    <t t-set="wishlist_installed" t-value="request.env['ir.module.module'].check_installed('website_sale_wishlist')"/>
-                    <t t-if="wishlist_installed and request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
+                <xpath expr="//ul[@id='nav-right-lg']/li[4]/div/a[1]" position="after">
+                    <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
                         <t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())"/>
                         <a id="my_wish" href="/shop/wishlist" class="dropdown-item" style="position: relative;">
-                           	WISHLIST <sup t-attf-class="my_wish_quantity o_animate_blink">(<t t-esc='wishcount'/>)</sup>
+                        	WISHLIST <sup t-attf-class="my_wish_quantity o_animate_blink">(<t t-esc='wishcount'/>)</sup>
                         </a>
                     </t>
                 </xpath>
@@ -19,8 +18,7 @@
 
         <template id="wishlist-card" name="Vendere Wishlist Products" inherit_id="theme_vendere.vendere_products_card">
         	<xpath expr="//div[@class='prod_actions']" position="after">
-        		<t t-set="wishlist_installed" t-value="request.env['ir.module.module'].check_installed('website_sale_wishlist')"/>
-        		 <t t-if="wishlist_installed and request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
+        	    <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
 	        		<t t-set="in_wish" t-value="product._is_in_wishlist()"/>
 		            <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
 		            <t t-if="not user_id._is_public()">
