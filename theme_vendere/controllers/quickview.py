@@ -25,6 +25,17 @@ class QuickviewData(http.Controller):
 				'description': product.website_description,
 				'token': csrf,
 				'variant': product_variants[0].id,
+				'availability': product.inventory_availability,
+				'virtual_available': product.virtual_available,
+				'threshold': product.available_threshold
 			}
 
 			return json.dumps(content)
+
+	@http.route('/pricelist', type='http', auth='public', website=True)
+	def get_pricelist_from_request(self):
+		website = request.website
+		if website:
+			return json.dumps({
+				'id': website.id
+			})

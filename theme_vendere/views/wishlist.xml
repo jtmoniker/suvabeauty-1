@@ -1,0 +1,47 @@
+<odoo>
+	<data>
+
+		<!-- Navbar Wishlist -->
+
+         <template id="wishlist-header" name="Vendere Wishlist Header" inherit_id="theme_vendere.navbar_logo_center">
+                <xpath expr="//ul[@id='nav-right-lg']/li[4]/div/a[1]" position="after">
+                    <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
+                        <t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())"/>
+                        <a id="my_wish" href="/shop/wishlist" class="dropdown-item" style="position: relative;">
+                        	WISHLIST <sup t-attf-class="my_wish_quantity o_animate_blink">(<t t-esc='wishcount'/>)</sup>
+                        </a>
+                    </t>
+                </xpath>
+        </template>
+
+        <!-- Products Card Wishlist -->
+
+        <template id="wishlist-card" name="Vendere Wishlist Products" inherit_id="theme_vendere.vendere_products_card">
+        	<xpath expr="//div[@class='prod_actions']" position="after">
+        	    <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
+	        		<t t-set="in_wish" t-value="product._is_in_wishlist()"/>
+		            <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+		            <t t-if="not user_id._is_public()">
+			           	<a t-if="product_variant_id" class="o_add_wishlist vendere_wishlist" t-att-disabled='in_wish or None' t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant_id" data-action="o_wishlist">
+			           		<i class="fa fa-heart-o"></i>
+			            </a>
+			        </t>
+			        <t t-else="">
+			        	<a href="/web/login" class="vendere_wishlist">
+			        		<i style="color: black" class="fa fa-heart-o"></i>
+			        	</a>
+			        </t>
+		        </t>
+        	</xpath>
+        </template>
+
+        <template id="wishlist_product" inherit_id="website_sale_wishlist.product_add_to_wishlist">
+        	<xpath expr="//button" position="replace">
+        		<a t-if="product_variant" class="o_add_wishlist_dyn" t-att-disabled='in_wish or None' title="Add to Wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant.id" data-action="o_wishlist">
+        			<i class="fa fa-heart-o"></i>
+        		</a>
+        	</xpath>
+        </template>
+
+    </data>
+</odoo>

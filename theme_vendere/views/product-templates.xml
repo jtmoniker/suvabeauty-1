@@ -105,5 +105,53 @@
 
 		</template>
 
+		<template id="vendere_recommended_products" name="Vendere Alternative Products" active="True" inherit_id="website_sale.product">
+			<xpath expr="//div[@id='product_full_description']" position="after">
+				<div class="slider-products container-fluid" t-if="product.alternative_product_ids">
+	                <h3>You May Also Like</h3>
+	                <ul class="row slider-products-container">
+						<t t-foreach="product.alternative_product_ids" t-as="alt_product">
+							<t t-set="first_possible_combination" t-value="alt_product._get_first_possible_combination()"/>
+							<t t-set="combination_info" t-value="alt_product._get_combination_info(first_possible_combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+							<t t-set="product_variant" t-value="alt_product.env['product.product'].browse(combination_info['product_id'])"/>
+							<t t-set="secondary_img" t-value="alt_product._get_secondary_img() or ''"/>
+							<t t-set="style_html" t-value="alt_product._get_style_classes() or ''"/>
+							
+							<li t-attf-data-product="#{alt_product.id}">
+								<div class='slider-prod'>
+									<div class="slide-img">
+										<a t-attf-href="/shop/product/#{alt_product.id}">
+											<img class="img img-fluid rounded" t-attf-src="/website/image/product.template/#{alt_product.id}/image"/>
+										</a>
+									</div>
+									<div class="slide-content">
+										<h6 class="prod-categ"><t t-esc="alt_product.public_categ_ids[0].name"/></h6>
+										<h5 class="prod-name"><t t-esc="alt_product.name"/></h5>
+										<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+											<b>
+												<span class="fp-price" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+												<span itemprop="price" style="display:none;"><t t-esc="combination_info['price']"/></span>
+												<t t-call="theme_vendere.vendere_product_list_rating">
+													<t t-set="p" t-value="product"/>
+												</t>
+											</b>
+											<div class="slide-action">
+												<a t-attf-href="/shop/product/#{alt_product.id}" role="button" class="btn btn-secondary btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
+													<span>View Product</span>
+												</a>
+												<a type='button' class="quickview" t-attf-data-product-id="#{alt_product.id}">
+													<i class="fa fa-eye"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</t>
+					</ul>
+	            </div>
+			</xpath>
+		</template>
+
 	</data>
 </odoo>

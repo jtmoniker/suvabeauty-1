@@ -44,6 +44,11 @@ odoo.define('vendere.quickView', function(require) {
 		    	}
 	    	}
 
+	    	var addToCartHtml = `<input class="btn btn-primary" value="SOLD OUT">`;
+	    	if (product['availability'] == 'never' || product['availability'] == 'custom' || product['availability'] == 'always' && product['virtual_available'] > 0 || product['availability'] == 'threshold' && product['virtual_available'] >= product['threshold']) { 
+	    		addToCartHtml = `<input class="btn btn-primary" type="submit" value="ADD TO CART">`;
+	    	}
+
 	    	// SET PRODUCT CONTENT
 	    	$('#quickview_content').html(`
 	    		<h2>${product['name']}</h2>
@@ -65,7 +70,7 @@ odoo.define('vendere.quickView', function(require) {
                             <input type="hidden" class="product_template_id" name="product_template_id" value="${productId}" />
 		    				<label>Quantity</label>
 		    				<input id="quickview_cart_qty" min="1" type="number" name="add_qty" value="1">
-				  			<input class="btn btn-primary" type="submit" value="ADD TO CART">
+		    				${addToCartHtml}
 			  			</div>
 			  		</form>
 		  		</div>

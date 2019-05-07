@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sale', 'website_theme_install'],
+    'depends': ['website_sale', 'website_sale_wishlist', 'website_sale_comparison'],
 
     # always loaded
     'data': [
@@ -33,5 +33,7 @@
         'views/views.xml',
         'views/snippets.xml',
         'views/options.xml',
+        'views/wishlist.xml',
+        'views/comparison.xml',
     ],
 }
