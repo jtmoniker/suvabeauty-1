@@ -20,7 +20,7 @@ class QuickviewData(http.Controller):
 			content = {
 				'name': product.name,
 				'category': product.public_categ_ids[0].name,
-				'price': price_info['list_price'],
+				'price': price_info['price'],
 				'images': images,
 				'description': product.website_description,
 				'token': csrf,
