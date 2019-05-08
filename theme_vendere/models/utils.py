@@ -72,7 +72,7 @@ class ProductTemplate(models.Model):
 			combination = product.sudo()._get_first_possible_combination()
 			price_info = product.with_context(website_id=int(website_id)).sudo()._get_combination_info(combination, add_qty=1)
 			res[product.id] = {
-				'price': price_info['list_price'],
+				'price': price_info['price'],
 			}
 		return res
 			
