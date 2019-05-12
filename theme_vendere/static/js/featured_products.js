@@ -5,27 +5,22 @@ odoo.define('theme_vendere.featuredProducts', function(require) {
 
 	var products = []
 
-	var $slides = $('.featured-products-container').find('li');
-	$slides.each(function(idx, li) {
-    	product_id = $(li).data()['product'];
-    	products.push(product_id);
-	});
+	var $featuredBlock = $('section.featured-products-section');
 
-	if (products.length) {
-		$.ajax({
-			url: `/pricelist`,
-			method: 'GET',
-		}).then((webData) => {
-			website = JSON.parse(webData);
-			rpc.query({
-				model: 'product.template',
-				method: 'update_featured_products',
-				args: [products, website['id']],
-			}).then(function(data) {
-				$slides.each(function(idx, li) {
-					product_id = $(li).data()['product'];
-			    	$(li).find('span.fp-price .oe_currency_value').text(data[product_id]['price'].toFixed(2))
-				});
+	if ($featuredBlock.length) {
+		$featuredBlock.each(function(idx, block) {
+			$.ajax({
+				url: `/shop/products/featured`,
+				method: "GET",
+			}).then(function(html) {
+				var el = $.parseHTML(html);
+				$(block).html(el[1].innerHTML);
+			}).then(function() {
+				$('.featured-products-container').lightSlider({
+					item: 5,
+					autoWidth: true,
+					pager: false,
+				})
 			});
 		});
 	}

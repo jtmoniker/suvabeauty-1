@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import http
 from odoo.http import request
+import math
 import json
 
 class QuickviewData(http.Controller):
@@ -22,7 +23,7 @@ class QuickviewData(http.Controller):
 				'category': product.public_categ_ids[0].name,
 				'price': price_info['price'],
 				'images': images,
-				'description': product.website_description,
+				'description': product.quickview_description,
 				'token': csrf,
 				'variant': product_variants[0].id,
 				'availability': product.inventory_availability,
@@ -32,10 +33,16 @@ class QuickviewData(http.Controller):
 
 			return json.dumps(content)
 
-	@http.route('/pricelist', type='http', auth='public', website=True)
-	def get_pricelist_from_request(self):
-		website = request.website
-		if website:
-			return json.dumps({
-				'id': website.id
-			})
+	@http.route('/shop/products/featured', type='http', auth='public', website=True, csrf=False)
+	def update_featured_products(self):
+		pricelist = request.website.get_current_pricelist()
+		html = request.env['ir.ui.view'].sudo().render_template(
+				'theme_vendere.snippet_featured_products',
+				values=dict({
+					'pricelist': pricelist,
+					'math': math,
+					'request': request,
+				}),
+			)
+
+		return html

@@ -63,18 +63,6 @@ class ProductTemplate(models.Model):
 	def _get_featured_products(self):
 		featured_products = self.env['product.template'].search([('featured_product','=',True),('website_published','=',True)])
 		return featured_products
-
-	@api.model
-	def update_featured_products(self, ids, website_id):
-		res = {}
-		Products = self.env['product.template'].browse(ids)
-		for product in Products:
-			combination = product.sudo()._get_first_possible_combination()
-			price_info = product.with_context(website_id=int(website_id)).sudo()._get_combination_info(combination, add_qty=1)
-			res[product.id] = {
-				'price': price_info['price'],
-			}
-		return res
 			
 	@api.model
 	def _get_style_classes(self):
