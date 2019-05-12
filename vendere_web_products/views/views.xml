@@ -128,7 +128,7 @@
             <br/>
             <h2 style="border-bottom: solid 1px grey">Quickview Content</h2>
             <br/>
-            <field name="website_description" widget='html' options="{'style-inline': true}"/>
+            <field name="quickview_description" widget='html' options="{'style-inline': true}"/>
             <br/>
             <h2 style="border-bottom: solid 1px grey">Product Description</h2>
             <br/>

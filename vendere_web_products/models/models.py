@@ -37,6 +37,7 @@ class ProductTemplate(models.Model):
 
 	website_long_description = fields.Html('Long Description', sanitize=False)
 	product_instructions = fields.Html('Instructions', sanitize=False)
+	quickview_description = fields.Html('Quickview Description', sanitize=False)
 
 	featured_product = fields.Boolean('Featured Product', default=False)
 
