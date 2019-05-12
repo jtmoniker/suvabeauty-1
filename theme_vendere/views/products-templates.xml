@@ -154,7 +154,7 @@
 							</a>
 						</div>
 						<div class="prod-content">
-							<h6 class="prod-categ"><t t-esc="product.public_categ_ids[0].name"/></h6>
+							<h6 class="prod-categ" t-if="len(product.public_categ_ids)"><t t-esc="product.public_categ_ids[0].name"/></h6>
 							<h5 class="prod-name"><t t-esc="product.name"/></h5>
 							<h6 t-if="not show_publish and not product.website_published">
 								<a role="button" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
