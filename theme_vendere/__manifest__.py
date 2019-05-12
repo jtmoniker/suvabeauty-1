@@ -26,6 +26,7 @@
         'website_sale_comparison', 
         'vendere_web_products',
         'ecommerce_product_reviews',
+        'vendere_mega_menu',
     ],
 
     # always loaded
