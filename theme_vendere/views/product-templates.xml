@@ -59,7 +59,7 @@
 			</xpath>
 			<xpath expr="//h1[@itemprop='name']" position="after">
 				<t t-set="avg_rating" t-value="product.get_avg_rating()"/>
-				<h3><t t-esc="product.public_categ_ids[0].name"/></h3>
+				<h3 t-if="len(product.public_categ_ids)"><t t-esc="product.public_categ_ids[0].name"/></h3>
 				<t t-call="ecommerce_product_reviews.review_visual">
                     <t t-set="rating" t-value="avg_rating"/>
                     <t t-set="rating_count" t-value="review_count"/>
@@ -115,7 +115,7 @@
 										</a>
 									</div>
 									<div class="slide-content">
-										<h6 class="prod-categ"><t t-esc="alt_product.public_categ_ids[0].name"/></h6>
+										<h6 class="prod-categ" t-if="len(alt_product.public_categ_ids)"><t t-esc="alt_product.public_categ_ids[0].name"/></h6>
 										<h5 class="prod-name"><t t-esc="alt_product.name"/></h5>
 										<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
 											<b>
