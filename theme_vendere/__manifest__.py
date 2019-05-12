@@ -20,7 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sale', 'website_sale_wishlist', 'website_sale_comparison'],
+    'depends': [
+        'website_sale', 
+        'website_sale_wishlist', 
+        'website_sale_comparison', 
+        'vendere_web_products',
+        'ecommerce_product_reviews',
+    ],
 
     # always loaded
     'data': [

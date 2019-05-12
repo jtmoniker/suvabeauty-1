@@ -4,7 +4,7 @@ odoo.define('vendere.quickView', function(require) {
 
 	var rpc = require('web.rpc')
 
-	$('a.quickview').on('click', (e) => {
+	$(document).on('click', 'a.quickview', (e) => {
 		var productId = e.currentTarget.dataset.productId;
 		$.ajax({
 			url: `/shop/product/quickview/${productId}`,
