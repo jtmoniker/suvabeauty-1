@@ -23,6 +23,7 @@
 
         <template id="reviews_body">
             <t t-set="counter" t-value="0"/>
+            <hr t-if="review_count"/>
             <div id="reviews-body">
                 <t t-foreach="reviews" t-as="review">
                     <div t-if="counter &lt;= 4" class="review">
@@ -113,7 +114,6 @@
                                 Write a review
                             </a>
                         </div>
-                        <hr/>
                         <t t-call="ecommerce_product_reviews.review_form"/>
                         <t t-call="ecommerce_product_reviews.reviews_body">
                             <t t-set="review" t-value="review"/>

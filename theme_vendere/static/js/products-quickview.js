@@ -56,7 +56,7 @@ odoo.define('vendere.quickView', function(require) {
 	    		<h4>${product['category']}</h3>
 	    		<br/>
 	    		<div class="description">
-	    			${product['description']}
+	    			${product['description'] ? product['description'] : ''}
 	    		</div>
 	    		<div class="content-footer">
 	    			<a href="/shop/product/${productId}">

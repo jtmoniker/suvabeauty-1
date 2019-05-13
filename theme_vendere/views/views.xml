@@ -6,9 +6,11 @@
       <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
       <field name="model">product.public.category</field>
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='sequence']" position="before">
-          <field name="vendere_category_organize"/>
-          <field name="vendere_finish_organize"/>
+        <xpath expr="//group" position="after">
+          <group string="Ecommerce Shop Display">
+            <field name="vendere_category_organize"/>
+            <field name="vendere_finish_organize"/>
+          </group>
         </xpath>
       </field>
     </record>
