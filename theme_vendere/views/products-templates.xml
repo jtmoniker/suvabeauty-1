@@ -72,7 +72,7 @@
 									<t t-call="theme_vendere.products_sort"/>
 								</t>
 							</div>
-							<div class="col-md-6 col-6 function-right">
+							<div t-if="len(products)" class="col-md-6 col-6 function-right">
 								<a title="Grid view" class="change-view" data-view="grid">
 									<button t-attf-class="grid-view #{'active' if not show_list else ''}">
 										<i class="fa fa-th"></i>
@@ -87,7 +87,7 @@
 						</div>
 					</t>
 					<t t-else="">
-						<div id="products_function" class="row">
+						<div t-if="len(products)" id="products_function" class="row">
 							<div class="col-md-6 col-6 function-left">
 								<t t-if="show_list">
 									<t t-call="theme_vendere.products_sort"/>

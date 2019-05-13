@@ -29,9 +29,11 @@
       <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
       <field name="model">product.public.category</field>
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='sequence']" position="after">
-          <field name="mega_exclude"/>
-          <field name="mega_image" widget="image" attrs="{'invisible': [('mega_exclude','=',True)]}"/>
+        <xpath expr="//group" position="after">
+          <group string="Mega Menu Settings">
+            <field name="mega_exclude"/>
+            <field name="mega_image" widget="image" attrs="{'invisible': [('mega_exclude','=',True)]}"/>
+          </group>
         </xpath>
       </field>
     </record>
