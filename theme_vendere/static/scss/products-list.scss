@@ -263,6 +263,9 @@ div#wrap {
                   border-radius: 0;
                   opacity: 0;
                   transition: all 0.5s ease;
+                  @media (max-width: 540px) {
+                    opacity: 1;
+                  }
                   i {
                     margin-right: 5px;
                   }
@@ -278,6 +281,9 @@ div#wrap {
                   background: white;
                   border-radius: 0;
                   opacity: 0;
+                  @media (max-width: 540px) {
+                    opacity: 1;
+                  }
                   transition: all 0.5s ease;
                   width: 35px;
                   height: 35px;

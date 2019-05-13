@@ -15,14 +15,16 @@ PPR = 4
 class WebsiteSaleVendere(WebsiteSale):
 
 	@http.route([
-        '''/shop''',
-        '''/shop/page/<int:page>''',
-        '''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>''',
-        '''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>/page/<int:page>''',
-        '''/shop/tag/<int:tag_id>''',
-        '''/shop/tag/<int:tag_id>/page/<int:page>'''
-    ])
+		'''/shop''',
+		'''/shop/page/<int:page>''',
+		'''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>''',
+		'''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>/page/<int:page>''',
+		'''/shop/tag/<int:tag_id>''',
+		'''/shop/tag/<int:tag_id>/page/<int:page>'''
+	])
 	def shop(self, page=0, category=None, search='', ppg=PPG, show_list=False, tag_id=False, **post):
+		if show_list:
+			post['show_list'] = True
 		render = super(WebsiteSaleVendere, self).shop(page, category, search, PPG, **post)
 		post['context'] = {'website_sale_stock_get_quantity': True}
 
