@@ -58,6 +58,7 @@ odoo.define('vendere.quickView', function(require) {
 	    		<div class="description">
 	    			${product['description'] ? product['description'] : ''}
 	    		</div>
+	    		<br/>
 	    		<div class="content-footer">
 	    			<a href="/shop/product/${productId}">
 	    				<span>View full product details</span><span>&rarr;</span>

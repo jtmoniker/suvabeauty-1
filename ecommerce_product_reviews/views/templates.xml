@@ -55,8 +55,8 @@
         </template>
 
         <template id="review_form" name="Ecommerce Review Form">
-            <hr/>
             <div id="review-form" class="d-none">
+                <hr/>
                 <form>
                     <h4>Write a Review</h4>
                     <input type="hidden" class="review-product" name="product_tmpl_id" t-attf-value="#{product.id}"/>
