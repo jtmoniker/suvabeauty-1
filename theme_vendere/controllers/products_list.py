@@ -73,9 +73,9 @@ class WebsiteSaleVendere(WebsiteSale):
 							'products': [],
 						}
 						if grid_finish:
-							org_products = Products.search([('finish_id','=',org.id),('public_categ_ids','child_of',category.id)])
+							org_products = Products.search([('finish_id','=',org.id),('public_categ_ids','child_of',category.id)], order=self._get_search_order(post))
 						else:
-							org_products = Products.search([('ecommerce_tag','=',org.id),('public_categ_ids','child_of',category.id)])
+							org_products = Products.search([('ecommerce_tag','=',org.id),('public_categ_ids','child_of',category.id)], order=self._get_search_order(post))
 
 						if len(org_products):
 							for sc in subcategories:
@@ -97,6 +97,11 @@ class WebsiteSaleVendere(WebsiteSale):
 					render.qcontext['org'] = organize
 
 		return render
+
+	def _get_search_order(self, post):
+		# OrderBy will be parsed in orm and so no direct sql injection
+		# id is added to be sure that order is a unique sort key
+		return 'is_published desc,%s , id desc' % post.get('order', 'website_sequence asc')
 
 	@http.route()
 	def product(self, product, category='', search='', **kwargs):
