@@ -9,7 +9,7 @@
                 <ul class="image_attrs list-inline" style="margin-left: 0px; display: inline-flex; flex-direction: row; flex-wrap: wrap;">
                     <t t-set="inc" t-value="0"/>
                     <t t-foreach="variant_id.value_ids" t-as="value_id">
-                        <li t-attf-data-name="#{value_id.linked_product.name}">
+                        <li style="margin-right: 2.5px;" t-attf-data-name="#{value_id.linked_product.name}">
                             <a t-attf-href="/shop/product/#{value_id.linked_product.id}">
                                 <img t-attf-src="/web/image/product.attribute.value/#{value_id.id}/image/50x50" class="img"/>
                             </a>
