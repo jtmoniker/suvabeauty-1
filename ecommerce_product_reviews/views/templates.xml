@@ -55,6 +55,7 @@
         </template>
 
         <template id="review_form" name="Ecommerce Review Form">
+            <hr/>
             <div id="review-form" class="d-none">
                 <form>
                     <h4>Write a Review</h4>
