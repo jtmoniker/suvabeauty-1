@@ -29,8 +29,8 @@
       <field name="model">product.template</field>
       <field name="priority" eval="101"/>
       <field name="arch" type="xml">
-        <tree edit="0" create="0" delete="0">
-          <field name="sequence" widget="handle"/>
+        <tree edit="0" create="0" delete="0" default_order="website_sequence asc">
+          <field name="website_sequence" widget="handle"/>
           <field name="name"/>
           <field name="default_code"/>
           <field name="website_published"/>
