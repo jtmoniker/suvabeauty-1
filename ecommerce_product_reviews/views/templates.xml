@@ -1,0 +1,153 @@
+<odoo>
+    <data>
+
+        <template id="review_visual" name="Visual Rating">
+            <!-- Send in rating to display (avg or individual) -->
+            <t t-set="val_integer" t-value="math.floor(rating)"/>
+            <t t-set="val_decimal" t-value="rating - val_integer"/>
+            <t t-set="empty_star" t-value="5 - (val_integer+math.ceil(val_decimal))"/>
+
+            <div class="o_website_rating_static">
+                <t t-foreach="range(val_integer)" t-as="num">
+                    <i style="font-size: 1.2em;" class="fa fa-star" role="img" aria-label="One star" title="One star"></i>
+                </t>
+                <t t-if="val_decimal">
+                    <i style="font-size: 1.2em;" class="fa fa-star-half-o" role="img" aria-label="Half a star" title="Half a star"></i>
+                </t>
+                <t t-foreach="range(empty_star)" t-as="num" role="img" t-attf-aria-label="#{empty_star} on 5" t-attf-title="#{empty_star} on 5">
+                    <i style="font-size: 1.2em;" class="fa fa-star-o"></i>
+                </t><span t-if="show_count" style="color: black;"> (<t t-esc="rating_count"/>)</span>
+            </div>
+
+        </template>
+
+        <template id="reviews_body">
+            <t t-set="counter" t-value="0"/>
+            <hr t-if="review_count"/>
+            <div id="reviews-body">
+                <t t-foreach="reviews" t-as="review">
+                    <div t-if="counter &lt;= 4" class="review">
+                        <t t-call="ecommerce_product_reviews.review_visual">
+                            <t t-set="rating" t-value="review.rating"/>
+                            <t t-set="rating_count" t-value="review_count"/>
+                            <t t-set="show_count" t-value="False"/>
+                        </t>
+                        <div class="review-ident">
+                            <p t-if="review.partner_id">
+                                <em><t t-esc="review.sudo().partner_id.name"/></em>
+                            </p>
+                            <p t-else="">
+                                <em>Anonymous</em>
+                            </p>
+                            <p>
+                                <em>on <t t-esc="review.review_date"/></em>
+                            </p>
+                        </div>
+                        <div class="review-body">
+                            <h6><b><t t-esc="review.name"/></b></h6>
+                            <p><t t-esc="review.body"/></p>
+                        </div>
+                    </div>
+                    <hr t-if="counter &lt;= 4"/>
+                    <t t-set="counter" t-value="counter + 1"/>
+                </t>
+            </div>
+        </template>
+
+        <template id="review_form" name="Ecommerce Review Form">
+            <div id="review-form" class="d-none">
+                <form>
+                    <h4>Write a Review</h4>
+                    <input type="hidden" class="review-product" name="product_tmpl_id" t-attf-value="#{product.id}"/>
+                    <label for="name">Name</label>
+                    <span class="error name-error"/>
+                    <input name="name" class="review-name" type="text" placeholder="Enter your name"/>
+                    <label for="email">Email</label>
+                    <span class="error email-error"/>
+                    <input type="email" name="email" class="review-email" placeholder="john.smith@example.com"/>
+                    <label for="location">Location</label>
+                    <input name="location" class="review-location" type="text" placeholder="eg: Paris, France"/>
+                    <label>Rating</label>
+                    <span class="error rating-error"/>
+                    <div id="review-form-rating">
+                        <i class="fa fa-star-o" data-rating="1"></i>
+                        <i class="fa fa-star-o" data-rating="2"></i>
+                        <i class="fa fa-star-o" data-rating="3"></i>
+                        <i class="fa fa-star-o" data-rating="4"></i>
+                        <i class="fa fa-star-o" data-rating="5"></i>
+                    </div>
+                    <label for="title">Review Title</label>
+                    <span class="error title-error"/>
+                    <input name="title" class="review-title" type="text" placeholder="Give your review a title"/>
+                    <label for="body">Body of Review (<span id="review-form-body-count">1500</span>)</label>
+                    <textarea name="body" class="review-body" placeholder="Write your comments here" maxlength="1500"/>
+                    <!-- <label for="image">Upload an Image</label>
+                    <input type="file" id="review-image" name="image" accept="image/png, image/jpeg, image/gif"/> -->
+                    <div id="review-form-footer">
+                        <input type="submit" class="button btn-submit" value="SUBMIT REVIEW"/>
+                    </div>
+                </form>
+                <hr/>
+            </div>
+        </template>
+
+        <template id="ecommerce_product_reviews" inherit_id="website_sale.product" name="Advanced Product Reviews" customize_show="True" active="True">
+            <xpath expr="//div[@id='product_full_description']" position="after">
+                <t t-set="avg_rating" t-value="product.get_avg_rating()"/>
+                <div id="product_reviews" class="container-fluid">
+                    <h2>REVIEWS</h2>
+                    <div id="review-container">
+                        <h2>CUSTOMER REVIEWS</h2>
+                        <div id="review-header">
+                            <p t-if="review_count == 0">No reviews yet</p>
+                            <div t-else="">
+                                <span>
+                                    <t t-call="ecommerce_product_reviews.review_visual">
+                                        <t t-set="rating" t-value="avg_rating"/>
+                                        <t t-set="rating_count" t-value="review_count"/>
+                                        <t t-set="show_count" t-value="False"/>
+                                    </t>
+                                </span>
+                                <span>Based on</span><span t-esc="review_count"/><span>reviews</span>
+                            </div>
+                            <a id="review-write-btn" href='#'>
+                                Write a review
+                            </a>
+                        </div>
+                        <t t-call="ecommerce_product_reviews.review_form"/>
+                        <t t-call="ecommerce_product_reviews.reviews_body">
+                            <t t-set="review" t-value="review"/>
+                        </t>
+                        <div t-if="review_count > 5" id="reviews-footer">
+                            <t t-set="review_pages" t-value="int(math.ceil(review_count/5))"/>
+                            <t t-set="counter" t-value="1"/>
+                            <a href="#" id="reviews-prev" t-attf-class="#{'inactive' if counter == 1 else ''}">
+                                &lt;&lt; Previous
+                            </a>
+                            <div id="reviews-pager" t-attf-data-total="#{review_pages}">
+                                <t t-foreach="range(review_pages)" t-as="page">
+                                    <t t-if="review_pages &lt;= 10 or counter &lt;= 9">
+                                        <a href="#" t-attf-class="review-pager #{'active' if counter == 1 else ''}" t-attf-data-page="#{counter}">
+                                            <t t-esc="counter"/>
+                                        </a>
+                                    </t>
+                                    <t t-set="counter" t-value="counter + 1"/>
+                                </t>
+                                <t t-if="review_pages &gt; 10">
+                                    <span class="last-separator">...</span>
+                                    <a href="#" class="review-pager" t-attf-data-page="#{review_pages}">
+                                        <t t-esc="review_pages"/>
+                                    </a>
+                                </t>
+                            </div>
+                            <a href="#" id="reviews-next">
+                                Next &gt;&gt;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

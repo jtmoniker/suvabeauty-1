@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+
+  	<record id="mega_product_public_category_form_view" model="ir.ui.view">
+      <field name="name">mega.product.public.category.form</field>
+      <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+      <field name="model">product.public.category</field>
+      <field name="arch" type="xml">
+        <xpath expr="//group" position="after">
+          <group string="Ecommerce Shop Display">
+            <field name="vendere_category_organize"/>
+            <field name="vendere_finish_organize"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>
