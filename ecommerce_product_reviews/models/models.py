@@ -56,10 +56,10 @@ class ProductTemplateReview(models.Model):
 		for member in crm_team.member_ids:
 			new_review.message_subscribe([member.partner_id.id])
 
-		new_review.message_post(
-			body="%s left you a new review of %s. Check it out!" % (new_review.partner_id.name, new_review.product_tmpl_id.name),
-			subject="%s left you a new review" % new_review.partner_id.name,
-			subtype='mail.mt_comment')
+		# new_review.message_post(
+		# 	body="%s left you a new review of %s. Check it out!" % (new_review.partner_id.name, new_review.product_tmpl_id.name),
+		# 	subject="%s left you a new review" % new_review.partner_id.name,
+		# 	subtype='mail.mt_comment')
 
 		if new_review.partner_id:
 			new_review.message_subscribe([new_review.partner_id.id])
