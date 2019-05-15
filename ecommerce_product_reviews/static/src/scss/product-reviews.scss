@@ -1,0 +1,122 @@
+div#product_reviews {
+	margin-top:45px;
+	h2 {
+		margin-bottom:25px;
+	}
+	div#review-container {
+		border: 1px solid #d7d7d7; 
+		padding: 25px; 
+		margin-bottom: 50px;
+		div#review-header {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			div {
+				display:flex; 
+				flex-direction: row; 
+				justify-content:left;
+				align-items: center;
+				span {
+					margin-right: 5px;
+				}
+			}
+		}
+		div#review-form {
+			form {
+				display: flex;
+				flex-direction: column;
+				label {
+					font-weight: 100;
+				}
+				span.error {
+					color: red;
+				}
+				input {
+					height: 45px;
+					padding: 10px 18px;
+					margin-bottom: 15px;
+					border: 1px solid #d7d7d7;
+					box-shadow: none;
+				}
+				textarea {
+					margin-bottom: 15px;
+					height: 200px;
+					border-color: #d7d7d7;
+				}
+				div#review-form-rating {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-start;
+					margin-bottom: 15px;
+					i {
+						font-size: 1.5em;
+						margin-right: 2.5px;
+						transition: all 0.5s ease;
+						&.fa-star-o {
+							color: #d7d7d7;
+						}	
+						&:hover {
+							cursor: pointer;
+						}
+						&.selected, &.hovered {
+							color: #e883f6;
+						}
+						&.included {
+							color: #6a6a6a;
+						}
+					}
+				}
+				div#review-form-footer {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-end;
+					input.btn-submit {
+						width: 165px;
+						height: 45px;
+						padding: 10px 18px;
+						background: black;
+						color: white;
+						&:hover {
+							cursor: pointer;
+						}
+					}
+				}
+			}
+		}
+		div.review {
+			display:flex; 
+			flex-direction:column;
+			div.review-ident {
+				display: flex; 
+				flex-direction: row; 
+				justify-content: space-between; 
+				margin-top: 8px;
+				color: #d7d7d7;
+			}
+			div.review-body {
+				display: flex; 
+				flex-direction: column;
+			}
+		}
+		div#reviews-footer {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			a#reviews-prev, a#reviews-next {
+				&.inactive {
+					visibility: hidden;
+				}
+			}
+			div#reviews-pager {
+				a {
+					&.active {
+						color: black;
+						text-decoration: none;
+						font-size: 1.2em;
+					}
+				}
+			}
+		}
+	}
+}
