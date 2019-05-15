@@ -4,7 +4,7 @@
 		<template id="vendere_footer_custom" inherit_id="website.footer_custom">
 			<xpath expr="//section" position="replace">
 				<section>
-					<div class="container footer-top-container">
+					<div class="container-fluid footer-top-container">
 						<div class="row">
 							<h2>Hey #SUVASquad! Hear it first from us ;)</h2>
 							<p>Join our mailing list to stay up-to-date on new launces, promos and all things SUVA!</p>
