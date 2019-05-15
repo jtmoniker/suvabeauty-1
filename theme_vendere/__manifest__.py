@@ -24,6 +24,7 @@
         'website_sale', 
         'website_sale_wishlist', 
         'website_sale_comparison', 
+        'website_crm',
         'vendere_web_products',
         'ecommerce_product_reviews',
         'vendere_mega_menu',
@@ -42,5 +43,6 @@
         'views/options.xml',
         'views/wishlist.xml',
         'views/comparison.xml',
+        'views/contact-page.xml',
     ],
 }
