@@ -870,7 +870,6 @@
                 }
             },
             build: function () {
-                console.log('build')
                 var $this = this;
                 $this.initialStyle();
                 if (this.doCss()) {
