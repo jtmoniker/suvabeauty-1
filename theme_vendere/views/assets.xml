@@ -10,6 +10,7 @@
                 <link rel="stylesheet" type="text/scss" href="/theme_vendere/static/scss/product.scss"/>
                 <link rel="stylesheet" type="text/scss" href="/theme_vendere/static/scss/snippets.scss"/>
                 <link rel="stylesheet" type="text/css" href="/theme_vendere/static/scss/lightslider.css"/>
+                <link rel="stylesheet" type="text/css" href="/theme_vendere/static/scss/contact.scss"/>
                 <script type="text/javascript" src="/theme_vendere/static/js/products-quickview.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/products-view.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/navbar.js"></script>
