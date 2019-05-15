@@ -35,6 +35,7 @@
         # 'security/ir.model.access.csv',
         'views/assets.xml',
         'views/navbar-templates.xml',
+        'views/footer-templates.xml',
         'views/products-templates.xml',
         'views/quickview-templates.xml',
         'views/product-templates.xml',
