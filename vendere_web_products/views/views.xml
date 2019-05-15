@@ -1,0 +1,203 @@
+<odoo>
+  <data>
+
+    <record id="vendere_product_public_category_form_view" model="ir.ui.view">
+      <field name="name">mega.product.public.category.form</field>
+      <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+      <field name="model">product.public.category</field>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='website_id']" position="after">
+          <field name="featured_category"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="suva_product_template_form_ecommerce">
+      <field name="name">suva.product.template.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='public_categ_ids']" position="after">
+          <field name="ecommerce_tag"/>
+          <field name="finish_id"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_product_content_tree" model="ir.ui.view">
+      <field name="name">Product Content Tree</field>
+      <field name="model">product.template</field>
+      <field name="priority" eval="101"/>
+      <field name="arch" type="xml">
+        <tree edit="0" create="0" delete="0" default_order="website_sequence asc">
+          <field name="website_sequence" widget="handle"/>
+          <field name="name"/>
+          <field name="default_code"/>
+          <field name="website_published"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="vendere_view_product_image_form" model="ir.ui.view">
+      <field name="name">Vendere Product Image Form</field>
+      <field name="model">product.image</field>
+      <field name="inherit_id" ref="website_sale.view_product_image_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='product_tmpl_id']" position="after">
+          <group>
+            <field name="is_secondary"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_product_content_form" model="ir.ui.view">
+      <field name="name">Product Content Form</field>
+      <field name="model">product.template</field>
+      <field name="priority" eval="101"/>
+      <field name="arch" type="xml">
+        <form create="0" delete="0">
+          <sheet>
+            <field name="image_medium" widget="image" class="oe_avatar"/>
+            <h1><field name="name"/></h1>
+            <group col="2">
+              <group colspan="1" string="Basic Configuration">
+                <field name="website_published"/>
+                <field name="inventory_availability"/>
+                <field name="available_threshold" attrs="{'invisible': [('inventory_availability','!=','threshold')]}"/>
+                <field name="alternative_product_ids" widget="many2many_tags"/>
+                <field name="accessory_product_ids" widget="many2many_tags"/>
+                <field name="featured_product"/>
+              </group>
+              <group colspan="1" string="Specifications">
+                <field name="default_code" readonly="1"/>
+                <field name="public_categ_ids" widget="many2many_tags"/>
+                <field name="ecommerce_tag" string="Sortable Tag"/>
+                <field name="meta_tags" widget="many2many_tags"/>
+                <field name="finish_id"/>
+              </group>
+            </group>
+            <group col="1">
+              <group name="extra_images" string="Extra Images">
+                <field name="product_image_ids" class="o_website_sale_image_list" context="{'default_name': name, 'default_product_tmpl_id': active_id}" nolabel="1">
+                  <kanban string="Product Images" class="o_attachments_previews" default_group_by="is_secondary">
+                      <field name="id"/>
+                      <field name="name"/>
+                      <field name="image"/>
+                      <field name="is_secondary"/>
+                      <templates>
+                        <t t-name="kanban-box">
+                          <div class="o_attachment oe_kanban_global_click o_website_sale_image_card">
+                            <div class="o_attachment_wrap">
+                              <div class="o_image_box">
+                                <div class="o_attachment_image" t-attf-style="background-image:url({{kanban_image('product.image', 'image', record.id.raw_value)}});"/>
+                                <div t-attf-class="o_image_overlay" t-att-title="record.name.value"/>
+                                <div class="o_website_sale_image_card_title" t-att-title="record.name.value">
+                                  <field name="name"/>
+                                </div>
+                              </div>
+
+                              <t t-set="size" t-value="[record.image.value][0]"/>
+                              <t t-set="size_status" t-value="'normal'" t-if="size.indexOf('Bytes') !== -1 or ( size.indexOf('Kb') !== -1 and size[2]=='.')"/>
+                              <t t-set="size_status" t-value="'warning'" t-elif="( size.indexOf('Kb') !== -1 and size[3]=='.')"/>
+                              <t t-set="size_status" t-value="'danger'"  t-else=""/>
+                              <t t-set="message" t-value="'Acceptable file size'" t-if="size_status == 'normal'"></t>
+                              <t t-set="message" t-value="'Huge file size. The image should be optimized/reduced.'" t-elif="size_status == 'warning'"></t>
+                              <t t-set="message" t-value="'Optimization required! Reduce the image size or increase your compression settings.'" t-else=""></t>
+
+                              <span t-attf-class="o_website_sale_image_card_size badge badge-#{size_status}" t-att-title="message">
+                                <t t-esc="record.image.value"/>
+                              </span>
+                            </div>
+                          </div>
+                        </t>
+                      </templates>
+                  </kanban>
+                </field>
+              </group>
+            </group>
+            <h2 style="border-bottom: solid 1px grey">Product Attributes</h2>
+            <button type="object" name="set_attribute_group" string="Use Attribute Group"/>
+            <br/>
+            <field name="attribute_line_ids">
+              <tree editable="bottom">
+                <field name="attribute_id"/>
+                <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" domain="[('attribute_id', '=', attribute_id)]" context="{'default_attribute_id': attribute_id}"/>
+              </tree>
+            </field>
+            <br/>
+            <h2 style="border-bottom: solid 1px grey">Quickview Content</h2>
+            <br/>
+            <field name="quickview_description" widget='html' options="{'style-inline': true}"/>
+            <br/>
+            <h2 style="border-bottom: solid 1px grey">Product Description</h2>
+            <br/>
+            <field name="website_long_description" widget="html" options="{'style-inline': true}"/>
+            <br/>
+            <h2 style="border-bottom: solid 1px grey">Product Instructions</h2>
+            <br/>
+            <field name="product_instructions" widget="html" options="{'style-inline': true}"/>
+            <br/>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+     <record id="product_attribute_group_form" model="ir.ui.view">
+      <field name="name">Attribute Group Form</field>
+      <field name="model">product.attribute.group</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h1><field name="name"/></h1>
+            <group col="2">
+              <group colspan="1">
+                <field name="attribute_id"/>
+              </group>
+              <group colspan="1">
+                <field name="attribute_value_ids" widget="many2many_tags" attrs="{'invisible': [('attribute_id','=',False)]}"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="product_attribute_group_wizard" model="ir.ui.view">
+      <field name="name">Attribute Group Wizard</field>
+      <field name="model">product.attribute.group.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="attribute_group_id"/>
+          </group>
+          <footer>
+            <button name="set_attributes" type="object" string="Set Attributes" class="oe_highlight"/>
+            <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="product_template_action_website_content" model="ir.actions.act_window">
+        <field name="name">Product Contents</field>
+        <field name="res_model">product.template</field>
+        <field name="context">{"search_default_filter_to_sell":1}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+          (0, 0, {'view_mode': 'tree', 'view_id': ref('vendere_web_products.website_product_content_tree')}),
+          (0, 0, {'view_mode': 'form', 'view_id': ref('vendere_web_products.website_product_content_form')})]"/>
+    </record>
+
+    <record id="action_product_attribute_groups" model="ir.actions.act_window">
+      <field name="name">Attribute Groups</field>
+      <field name="res_model">product.attribute.group</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="website_product_content" name="Product Contents" parent="website_sale.menu_catalog" sequence="0" action="vendere_web_products.product_template_action_website_content" groups="website.group_website_designer"/>
+
+    <menuitem id="website_product_attribute_groups" name="Attribute Groups" parent="website_sale.menu_product_settings" sequence="99" action="vendere_web_products.action_product_attribute_groups" groups="website.group_website_designer"/>
+
+  </data>
+</odoo>

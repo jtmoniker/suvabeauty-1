@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_finish_public,product.finish.public,model_product_finish,,1,0,0,0
+access_product_finish_manager,product.finish.manager,model_product_finish,stock.group_stock_manager,1,1,1,1
+access_product_tag_public,product.tag.public,model_product_template_tag,,1,0,0,0
+access_product_tag_manager,product.tag.manager,model_product_template_tag,stock.group_stock_manager,1,1,1,1
+access_attribute_group,attribute.group,model_product_attribute_group,website.group_website_designer,1,1,1,1
