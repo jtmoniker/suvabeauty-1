@@ -65,6 +65,10 @@ odoo.define('ecommerce_product_reviews.reviews', function(require) {
 					$("span.first-separator").after(pagerElements.join("\n"));
 				}
 			}
+		}).then(function() {
+			$("HTML, BODY").animate({
+				scrollTop: $('div#product_reviews').offset().top - 100
+			}, 500);
 		});
 	});
 
@@ -88,6 +92,10 @@ odoo.define('ecommerce_product_reviews.reviews', function(require) {
 			if (currentPage == 2) {
 				$('#reviews-prev').addClass('inactive');
 			}
+		}).then(function() {
+			$("HTML, BODY").animate({
+				scrollTop: $('div#product_reviews').offset().top - 100
+			}, 500);
 		});
 
 		// Handle Dynamic Reviews Pager on 'Prev' Click.
@@ -153,6 +161,10 @@ odoo.define('ecommerce_product_reviews.reviews', function(require) {
 					$('#reviews-prev').removeClass('inactive');
 					$('#reviews-next').removeClass('inactive');
 				}
+			}).then(function() {
+				$("HTML, BODY").animate({
+					scrollTop: $('div#product_reviews').offset().top - 100
+				}, 500);
 			});
 
 			if (totalPages > 10) {
@@ -222,7 +234,6 @@ odoo.define('ecommerce_product_reviews.reviews', function(require) {
 					$('#review-form > form > span.rating-error').text('');
 				}
 			} else {
-				console.log(values)
 				$.ajax({
 					url: `/shop/product/${productID}/reviews`,
 					method: "POST",

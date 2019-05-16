@@ -14,21 +14,21 @@
 						<hr/>
 						<p>Customer Service Hours for phone support is Monday - Saturday from 9:00 am to 5:00 pm PST.</p>
 						<div class="contact-info row">
-							<div class="col-4">
+							<div class="col-12 col-sm-4">
 								<i class="fa fa-phone"/>
 								<p>
 									<strong>CALL US</strong>
 								</p>
 								<a href="tel:604-283-4033">604-283-4033</a>
 							</div>
-							<div class="col-4">
+							<div class="col-12 col-sm-4">
 								<i class="fa fa-envelope"/>
 								<p>
 								   <strong>EMAIL</strong>
 								</p>
 								<a href="mailto:info@suvabeauty.com">info@suvabeauty.com</a>
 							</div>
-							<div class="col-4">
+							<div class="col-12 col-sm-4">
 								<i class="fa fa-map-marker"/>
 								<p>
 									<strong>OUR ADDRESS</strong>

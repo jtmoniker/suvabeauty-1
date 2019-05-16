@@ -16,9 +16,9 @@
 
 		<template id="snippet_featured_products" name="Featured Products Slider">
 			<t t-set="products" t-value="request.env['product.template'].sudo()._get_featured_products()"/>
-			<section class="slider-products featured-products-section container-fluid">
+			<section class="slider-products featured-products-section">
 				<h1>You May Also Like</h1>
-				<ul class="row slider-products-container featured-products-container">
+				<ul class="slider-products-container featured-products-container">
 					<t t-foreach="products" t-as="product">
 
 						<t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
