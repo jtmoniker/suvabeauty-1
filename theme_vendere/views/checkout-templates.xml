@@ -1,0 +1,11 @@
+<odoo>
+	<data>
+
+		<template id="vendere_total" inherit_id="website_sale.total">
+			<xpath expr="//tr[@id='order_total']/td[2]/strong" position="before">
+				<strong itemprop="priceCurrency" t-esc="website.currency_id.name" />
+			</xpath>
+		</template>
+
+	</data>
+</odoo>
