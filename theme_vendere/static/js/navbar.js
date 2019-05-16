@@ -3,6 +3,7 @@ odoo.define('theme_vendere.Navbar', function(require) {
 	require('web.dom_ready');
 
 	$(document).on('click', 'header a.search-link', function(e){
+		e.preventDefault();
 		var $el = $(e.target).closest('header');
 		var $search = $el.find('div.search-dropdown');
 		if ($search.hasClass('active')) {
