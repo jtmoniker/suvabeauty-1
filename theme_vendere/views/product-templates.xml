@@ -45,12 +45,12 @@
 						</a>
 					</li>
 					<li>
-						<a t-attf-href="https://plus.google.com.com/share?url=#{request.httprequest.url}" target="_blank">
+						<a t-attf-href="https://plus.google.com/share?url=#{request.httprequest.url}" target="_blank">
 							<i class="fa fa-google-plus"></i>
 						</a>
 					</li>
 					<li>
-						<a t-attf-href="https://www.linkedin.com.com/cws/share?url=#{request.httprequest.url}" title="Follow us on linkedin" target="_blank">
+						<a t-attf-href="https://www.linkedin.com/cws/share?url=#{request.httprequest.url}" title="Follow us on linkedin" target="_blank">
 							<i class="fa fa-linkedin"></i>
 						</a>
 					</li>
@@ -75,7 +75,7 @@
 			</xpath>
 			<xpath expr="//section[@id='product_detail']" position="inside">
 					<ul class="nav nav-tabs" style="margin-bottom: 25px;">
-					  <li t-if="product.website_long_description" class="nav-item"><a t-attf-class="nav-link {{ 'active' if product.website_long_description else '' }}" data-toggle="tab" href="#prod_description">Description</a></li>
+					  <li t-if="product.website_long_description" style="margin-right: 50px;" class="nav-item"><a t-attf-class="nav-link {{ 'active' if product.website_long_description else '' }}" data-toggle="tab" href="#prod_description">Description</a></li>
 					  <li t-if="product.product_instructions" class="nav-item"><a t-attf-class="nav-link {{ 'active' if not product.website_long_description else '' }}" data-toggle="tab" href="#prod_instructions">How to Use</a></li>
 					</ul>
 					<div class="tab-content">
