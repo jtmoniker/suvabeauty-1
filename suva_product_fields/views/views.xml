@@ -106,7 +106,10 @@
       <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='fixed_price']" position="before">
-          <field name="currency_id" attrs="{'invisible': [('delivery_type','!=','fixed')]}"/>
+          <field name="currency_id"/>
+        </xpath>
+        <xpath expr="//field[@name='price_rule_ids']" position="before">
+          <field name="currency_id"/>
         </xpath>
       </field>
     </record>
