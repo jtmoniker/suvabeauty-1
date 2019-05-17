@@ -177,7 +177,7 @@
 								<input name="product_id" t-att-value="product_variant.id" type="hidden" />
 								<div class="prod_actions">
 									<t t-if="product._is_add_to_cart_possible()">
-										<t t-if="product.inventory_availability in ['never', 'custom'] or product.inventory_availability == 'always' and forecasted_qty &gt; 0 or product.inventory_availability == 'threshold' and forecasted_qty &gt;= product.available_threshold">
+										<t t-if="product.inventory_availability in ['never', 'custom'] or product.inventory_availability == 'always' and forecasted_qty &gt; 0 or product.inventory_availability == 'threshold' and forecasted_qty &gt; 0">
 											<a href="#" role="button" class="btn btn-secondary add-to-cart btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
 												<i class="fa fa-shopping-bag"></i><span>ADD TO CART</span>
 											</a>

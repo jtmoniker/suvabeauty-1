@@ -45,7 +45,7 @@ odoo.define('vendere.quickView', function(require) {
 	    	}
 
 	    	var addToCartHtml = `<input class="btn btn-primary" value="SOLD OUT">`;
-	    	if (product['availability'] == 'never' || product['availability'] == 'custom' || product['availability'] == 'always' && product['virtual_available'] > 0 || product['availability'] == 'threshold' && product['virtual_available'] >= product['threshold']) { 
+	    	if (product['availability'] == 'never' || product['availability'] == 'custom' || product['availability'] == 'always' && product['virtual_available'] > 0 || product['availability'] == 'threshold' && product['virtual_available'] > 0) { 
 	    		addToCartHtml = `<input class="btn btn-primary" type="submit" value="ADD TO CART">`;
 	    	}
 
