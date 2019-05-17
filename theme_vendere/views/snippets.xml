@@ -41,6 +41,7 @@
 									<h5 class="prod-name"><t t-esc="product.name"/></h5>
 									<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
 										<b>
+											<span itemprop="priceCurrency" t-esc="website.currency_id.name" />
 											<span class="fp-price" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
 											<span itemprop="price" style="display:none;"><t t-esc="combination_info['price']"/></span>
 											<t t-call="ecommerce_product_reviews.review_visual">
