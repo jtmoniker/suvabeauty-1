@@ -1,6 +1,12 @@
 <odoo>
 	<data>
 
+		<template id="vendere_product_price" inherit_id="website_sale.product_price">
+			<xpath expr="//span[@itemprop='priceCurrency']" position="attributes">
+				<attribute name="style"></attribute>
+			</xpath>
+		</template>
+
 		<template id="vendere_product" inherit_id="website_sale.product">
 			<xpath expr="//section/div[1]/div[1]" position="attributes">
 				<attribute name="class">col-md-6</attribute>
