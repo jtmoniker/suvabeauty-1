@@ -164,9 +164,9 @@
 									<t t-if="True"><!-- compatibility 12.0 -->
 										<del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
 									</t>
+									<span itemprop="priceCurrency" t-esc="website.currency_id.name" />
 									<span t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
 									<span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
-									<span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
 									<t t-call="ecommerce_product_reviews.review_visual">
 								        <t t-set="rating" t-value="avg_rating"/>
 								        <t t-set="rating_count" t-value="review_count"/>
