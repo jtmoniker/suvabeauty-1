@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+
+    <report 
+            id="action_report_saleorder html"
+            string="Quotation / Order HTML"
+            model="sale.order" 
+            report_type="qweb-html"
+            file="sale.report_saleorder" 
+            name="sale.report_saleorder"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+        />
+  
+    <template id="report_assets_common" name="suva_sale_report" inherit_id="web.report_assets_common">
+      <xpath expr="." position="inside">
+        <link rel="stylesheet" type="text/scss" href="/suva_reports/static/src/scss/suva_sale_order_document.scss"/>
+      </xpath>
+    </template>
+
+  </data>
+</odoo>
