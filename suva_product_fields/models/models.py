@@ -65,6 +65,22 @@ class DeliveryCarrier(models.Model):
 	_inherit = "delivery.carrier"
 
 	currency_id = fields.Many2one('res.currency', 'Currency')
+	# country_group_ids = fields.Many2many('res.country.group', string="Country Groups")
+
+	# @api.one
+	# @api.onchange('country_group_ids')
+	# def _compute_countries_from_group(self):
+	# 	list_ids = []
+	# 	for group in self.country_group_ids:
+	# 		self.write({
+	# 			'country_ids': [(6, False, group.country_ids.ids)],
+	# 			})
+			# list_ids.extend(group.country_ids.ids)
+		# country_ids = list(dict.fromkeys(list_ids))
+		# if len(country_ids):
+		# 	self.country_ids = [(6, False, country_ids)]
+		# else:
+		# 	self.country_ids.unlink()
 
 	def fixed_rate_shipment(self, order):
 		carrier = self._match_address(order.partner_shipping_id)
@@ -149,5 +165,20 @@ class ProductProduct(models.Model):
 	def _compute_weights(self):
 		for product in self:
 			self._compute_weight()
+
+class SaleOrder(models.Model):
+
+	_inherit = "sale.order"
+
+	total_weight = fields.Float('Total Weight', digits=(16,2), compute="_compute_total_weight", readonly=True)
+
+	@api.depends('order_line')
+	def _compute_total_weight(self):
+		weight = 0
+		for line in self.order_line:
+			weight += (line.product_id.weight * line.product_uom_qty)
+
+		self.total_weight = weight
+
 
 
