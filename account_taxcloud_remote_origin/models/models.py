@@ -7,8 +7,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_round
 
-from enterprise.account_taxcloud.models.taxcloud_request import TaxCloudRequest
-from enterprise.sale_account_taxcloud.models.taxcloud_request import SaleTaxCloudRequest
+from odoo.addons.account_taxcloud.models.taxcloud_request import TaxCloudRequest
+from odoo.addons.sale_account_taxcloud.models.taxcloud_request import TaxCloudRequest as SaleTaxCloudRequest
 
 class ResConfigSettings(models.TransientModel):
 	_inherit = 'res.config.settings'
@@ -122,7 +122,7 @@ class SaleOrder(models.Model):
 		else: 
 			shipper = self.company_id or self.env.user.company_id
 
-		request = TaxCloudRequest(api_id, api_key)
+		request = SaleTaxCloudRequest(api_id, api_key)
 
 		request.set_location_origin_detail(shipper)
 		request.set_location_destination_detail(self.partner_shipping_id)
