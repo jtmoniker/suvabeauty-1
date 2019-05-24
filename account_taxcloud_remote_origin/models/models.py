@@ -28,7 +28,10 @@ class AccountInvoice(models.Model):
 		remote = Param.sudo().get_param('taxcloud.taxcloud_remote_warehouse')
 		
 		if remote:
+
 			shipper = self.env['stock.warehouse'].sudo().browse(int(remote)).partner_id
+			raise ValidationError('This is the remote value: ' + str(remote))
+			raise ValidationError('This is the shipper value: ' + str(shipper.name))
 		else: 
 			shipper = self.company_id or self.env.user.company_id
 
