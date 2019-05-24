@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['account_taxcloud', 'sale'],
+    'depends': ['sale', 'account_taxcloud', 'sale_account_taxcloud'],
 
     # always loaded
     'data': [
