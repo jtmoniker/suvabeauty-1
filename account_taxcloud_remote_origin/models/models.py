@@ -26,12 +26,9 @@ class AccountInvoice(models.Model):
 		api_id = Param.sudo().get_param('account_taxcloud.taxcloud_api_id_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_id')
 		api_key = Param.sudo().get_param('account_taxcloud.taxcloud_api_key_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_key')
 		remote = Param.sudo().get_param('taxcloud.taxcloud_remote_warehouse')
-		
-		if remote:
 
+		if remote:
 			shipper = self.env['stock.warehouse'].sudo().browse(int(remote)).partner_id
-			raise ValidationError('This is the remote value: ' + str(remote))
-			raise ValidationError('This is the shipper value: ' + str(shipper.name))
 		else: 
 			shipper = self.company_id or self.env.user.company_id
 
@@ -119,7 +116,6 @@ class SaleOrder(models.Model):
 		api_id = Param.sudo().get_param('account_taxcloud.taxcloud_api_id_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_id')
 		api_key = Param.sudo().get_param('account_taxcloud.taxcloud_api_key_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_key')
 		remote = Param.sudo().get_param('taxcloud.taxcloud_remote_warehouse')
-		
 		if remote:
 			shipper = self.env['stock.warehouse'].sudo().browse(int(remote)).partner_id
 		else: 
