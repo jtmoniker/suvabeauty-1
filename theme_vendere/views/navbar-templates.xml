@@ -3,6 +3,19 @@
 
         <!-- Navbar Templates -->
 
+        <template id="currency_image">
+            <t t-set="pricelist" t-value="request.website.get_current_pricelist()"/>
+            <t t-set="currency" t-value="pricelist.currency_id.name"/>
+            <t t-if="currency == 'CAD'">
+                <t t-set="country" t-value="request.env['res.country'].sudo().search([('code','=','CA')])"/>
+                <span t-field="country.image" t-options="{'widget': 'image', 'style': 'height: 20px;'}"/>
+            </t>
+            <t t-if="currency == 'USD'">
+                <t t-set="country" t-value="request.env['res.country'].sudo().search([('code','=','US')])"/>
+                <span t-field="country.image" t-options="{'widget': 'image', 'style': 'height: 20px;'}"/>
+            </t>
+        </template>
+
         <template id="navbar_logo_center" name="Center Logo" inherit_id="website.layout" priority="18">
             <xpath expr="//div[@id='wrapwrap']/header/nav" position="replace">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -56,6 +69,9 @@
                                     </t>
                                 </ul>
                                 <ul class="nav navbar-nav navbar-left text-left d-lg-none" id="top_menu">
+                                    <li class="nav-item">
+                                        <t t-call="theme_vendere.currency_image"/>
+                                    </li>
                                     <t t-foreach="website.menu_id.child_id" t-as="submenu">
                                         <t t-call="website.submenu">
                                             <t t-set="item_class" t-value="'nav-item'"/>
@@ -73,10 +89,13 @@
 
                             <ul id="nav-right-lg" class="nav navbar-nav text-right navbar-right d-none d-lg-flex">
                                 <li class="nav-item">
+                                    <t t-call="theme_vendere.currency_image"/>
+                                </li>
+                                <!-- <li class="nav-item">
                                     <t t-call="website_sale.pricelist_list">
                                         <t t-set="_classes">ml-2</t>
                                     </t>
-                                </li>
+                                </li> -->
                                 <li class="nav-item divider"/>
                                 <li groups="base.group_public" class="nav-item">
                                     <a t-attf-href="/web/login" class="nav-link">
