@@ -28,6 +28,10 @@
         </xpath>
     </template>
 
+   <!--  <template id="cart_line_description_following_lines" inherit_id="website_sale.cart_line_description_following_lines">
+        <xpath expr="//span" position="replace"></xpath>
+    </template> -->
+
     <!-- Cart Page -->
 <!--     <template id="product_attribute_image_cart_lines" inherit_id="website_sale.cart_lines">
         <xpath expr="//table[@id='cart_products']/tbody/t/tr/td[@t-if='line.product_id.product_tmpl_id']/a" position="before">
