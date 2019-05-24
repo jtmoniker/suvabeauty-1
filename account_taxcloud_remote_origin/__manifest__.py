@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Suva Custom Fields",
+    'name': "account_taxcloud_remote_origin",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,7 +10,7 @@
         Long description of module's purpose
     """,
 
-    'author': "JT Moniker",
+    'author': "My Company",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,10 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['delivery', 'sale_coupon'],
+    'depends': ['sale', 'account_taxcloud', 'sale_account_taxcloud'],
 
     # always loaded
     'data': [
+        # 'security/ir.model.access.csv',
         'views/views.xml',
+        'views/templates.xml',
+    ],
+    # only loaded in demonstration mode
+    'demo': [
+        'demo/demo.xml',
     ],
 }

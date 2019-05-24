@@ -105,10 +105,37 @@
       <field name="model">delivery.carrier</field>
       <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
       <field name="arch" type="xml">
+        <!-- <xpath expr="//field[@name='country_ids']" position="before">
+          <field name="country_group_ids" widget="many2many_tags"/>
+        </xpath> -->
         <xpath expr="//field[@name='fixed_price']" position="before">
           <field name="currency_id"/>
         </xpath>
         <xpath expr="//field[@name='price_rule_ids']" position="before">
+          <field name="currency_id"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="suva_view_order_form" model="ir.ui.view">
+      <field name="name">suva.view.order.form</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='button_box']" position="inside">
+          <button name="" type="action" class="oe_stat_button" icon="fa-balance-scale">
+            <field name="total_weight" widget="statinfo" string="Weight (kg)"/>
+          </button>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="sale_coupon_suva_fields" model="ir.ui.view">
+      <field name="name">sale.coupon.suva.fields</field>
+      <field name="model">sale.coupon.program</field>
+      <field name="inherit_id" ref="sale_coupon.sale_coupon_program_view_form_common"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='rule_products_domain']" position="after">
           <field name="currency_id"/>
         </xpath>
       </field>
