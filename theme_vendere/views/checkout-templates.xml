@@ -11,6 +11,12 @@
 			<xpath expr="//label[@for='name']" position="replace">
 				<label class="col-form-label" for="name">Full Name</label>
 			</xpath>
+			<xpath expr="//input[@name='field_required']" position="replace">
+				<input type="hidden" name="field_required" t-att-value="'zip,name'" />
+			</xpath>
+			<xpath expr="//label[@for='phone']" position="attributes">
+				<attribute name="class">col-form-label label-optional</attribute>
+			</xpath>
 		</template>
 
 	</data>
