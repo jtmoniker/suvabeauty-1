@@ -177,7 +177,7 @@ class ShipstationCustomStore(http.Controller):
 						subtype='shipstation_custom_store.mt_shipstation')
 
 
-					if not backorder:
+					if not backorder and custom_store.auto_send_email and delivery.partner_id.email:
 						delivery._send_shipstation_delivery_confirmation(delivery.id)
 
 				response = request.make_response('Received Shipment Notification')

@@ -91,6 +91,7 @@ class SSCustomStore(models.Model):
 	endpoint = fields.Char('Custom Store URL', readonly=True, compute='_generate_endpoint', store=True)
 	username = fields.Char('Custom Store Username')
 	password = fields.Char('Custom Store Password')
+	auto_send_email = fields.Boolean('Automate Delivery Confirmation', default=False)
 
 	_sql_constraints = [
 		('scs_name',
