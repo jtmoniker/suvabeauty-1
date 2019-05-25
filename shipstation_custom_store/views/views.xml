@@ -19,12 +19,15 @@
       <field name="arch" type="xml">
         <form>
           <sheet>
-            <group>
-              <group>
+            <group col="2">
+              <group colspan="1" string="Credentials">
                 <field name="name"/>
                 <field name="username"/>
                 <field name="password" password="True"/>
                 <field name="endpoint"/>
+              </group>
+              <group colspan="1" string="Configuration">
+                <field name="auto_send_email"/>
               </group>
             </group>
           </sheet>
