@@ -65,6 +65,11 @@ class StockPicking(models.Model):
 			})
 		return res
 
+	@api.model
+	def _send_shipstation_delivery_confirmation(self, res_id):
+		confirmation_template = self.env.ref('delivery.mail_template_data_delivery_confirmation')
+		confirmation_template.send_mail(res_id, notif_layout='mail.mail_notification_light')
+
 class AccountInvoice(models.Model):
 	_inherit = 'account.invoice'
 
