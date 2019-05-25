@@ -65,6 +65,11 @@ class StockPicking(models.Model):
 			})
 		return res
 
+	@api.model
+	def _send_shipstation_delivery_confirmation(self, res_id):
+		confirmation_template = self.env.ref('delivery.mail_template_data_delivery_confirmation')
+		confirmation_template.send_mail(res_id, notif_layout='mail.mail_notification_light', force_send=True)
+
 class AccountInvoice(models.Model):
 	_inherit = 'account.invoice'
 
@@ -86,6 +91,7 @@ class SSCustomStore(models.Model):
 	endpoint = fields.Char('Custom Store URL', readonly=True, compute='_generate_endpoint', store=True)
 	username = fields.Char('Custom Store Username')
 	password = fields.Char('Custom Store Password')
+	auto_send_email = fields.Boolean('Automate Delivery Confirmation', default=False)
 
 	_sql_constraints = [
 		('scs_name',

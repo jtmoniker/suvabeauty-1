@@ -123,6 +123,7 @@ class ShipstationCustomStore(http.Controller):
 					('invoice_status','=','invoiced'),
 					('delivery_count','>',0)
 				])
+
 				response_body = ET.Element('Orders')
 
 				self._generate_shipstation_xml(response_body, orders)
@@ -156,7 +157,7 @@ class ShipstationCustomStore(http.Controller):
 					})
 
 					message = 'This order has been shipped via shipstation and automatically validated as a result. Carrier and tracking information are available in the Additional Info tab of the delivery record.'
-					bo_message = 'This order was shipped via shipstation. However, not all products were available within Odoo at the time of validation and a backorder was created. This backordered delivery must be validated when inventory levels allow.'
+					bo_message = 'This order was shipped via shipstation. However, not all products were available within Odoo at the time of validation and a backorder was created. This backordered delivery must be validated when inventory levels allow and a manual delivery confirmation email must be sent.'
 
 					if len(BackOrder):
 						for bo in BackOrder:
@@ -174,6 +175,10 @@ class ShipstationCustomStore(http.Controller):
 						body=bo_message if backorder else message,
 						subject='Shipped Via Shipstation',
 						subtype='shipstation_custom_store.mt_shipstation')
+
+
+					if not backorder and custom_store.auto_send_email and delivery.partner_id.email:
+						delivery._send_shipstation_delivery_confirmation(delivery.id)
 
 				response = request.make_response('Received Shipment Notification')
 				response.status = '200'
