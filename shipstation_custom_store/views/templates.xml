@@ -1,22 +1,18 @@
 <odoo>
     <data>
-        <!-- <template id="listing"> -->
-        <!--   <ul> -->
-        <!--     <li t-foreach="objects" t-as="object"> -->
-        <!--       <a t-attf-href="#{ root }/objects/#{ object.id }"> -->
-        <!--         <t t-esc="object.display_name"/> -->
-        <!--       </a> -->
-        <!--     </li> -->
-        <!--   </ul> -->
-        <!-- </template> -->
-        <!-- <template id="object"> -->
-        <!--   <h1><t t-esc="object.display_name"/></h1> -->
-        <!--   <dl> -->
-        <!--     <t t-foreach="object._fields" t-as="field"> -->
-        <!--       <dt><t t-esc="field"/></dt> -->
-        <!--       <dd><t t-esc="object[field]"/></dd> -->
-        <!--     </t> -->
-        <!--   </dl> -->
-        <!-- </template> -->
+        
+        <template id="shipstation_report_delivery_document2" inherit_id="delivery.report_delivery_document2">
+            <xpath expr="//td[3]" position="replace">
+                <td t-if="o.picking_type_id.code == 'outgoing' and o.carrier_id">
+                    <t t-if="o.ss_carrier">
+                        <span t-esc="o.ss_carrier"/>
+                    </t>
+                    <t t-else="">
+                        <span t-field="o.carrier_id"/>
+                    </t>
+                </td>
+            </xpath>
+        </template>
+
     </data>
 </odoo>
