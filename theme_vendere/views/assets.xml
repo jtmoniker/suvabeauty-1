@@ -16,6 +16,7 @@
                 <script type="text/javascript" src="/theme_vendere/static/js/products-view.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/navbar.js"></script>
                 <script type="text/javascript" src="/theme_vendere/static/js/featured_products.js"/>
+                <script type="text/javascript" src="/theme_vendere/static/js/checkout.js"/>
             </xpath>
         </template>
 
