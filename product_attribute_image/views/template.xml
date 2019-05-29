@@ -5,6 +5,7 @@
     <template id="product_attribute_image_variants" inherit_id="sale.variants">
         <xpath expr="//t/li/t[last()]" position="after">
             <t t-if="variant_id.attribute_id.type == 'image' and variant_id.attribute_id.link_to_product">
+                <br/>
 
                 <ul t-att-data-attribute_id="variant_id.attribute_id.id" class="image_attrs list-inline" style="margin-left: 0px; display: inline-flex; flex-direction: row; flex-wrap: wrap;">
                     
@@ -38,7 +39,7 @@
                         </a>
 
                         <!-- Hidden radio Input for compatibility with Odoo 12 -->
-                        
+
                         <t t-if="checked">
                             <input type="radio"
                             t-attf-class="js_variant_change #{variant_id.attribute_id.create_variant} d-none"
