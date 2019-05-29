@@ -107,16 +107,17 @@ class WebsiteSaleVendere(WebsiteSale):
 	def product(self, product, category='', search='', **kwargs):
 		render = super(WebsiteSaleVendere, self).product(product, category, search, **kwargs)
 		render.qcontext['math'] = math
-		active_categ = product.public_categ_ids[0]
+		active_categ = product.public_categ_ids[0] if len(product.public_categ_ids) else False
 		categories = []
 
 		parent = True
-		while parent:
-			categories.append(active_categ)
-			if active_categ.parent_id:
-				active_categ = active_categ.parent_id
-			else:
-				parent = False
+		if active_categ:
+			while parent:
+				categories.append(active_categ)
+				if active_categ.parent_id:
+					active_categ = active_categ.parent_id
+				else:
+					parent = False
 
 		render.qcontext['categories'] = list(reversed(categories))
 		return render
