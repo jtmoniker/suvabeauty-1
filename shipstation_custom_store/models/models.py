@@ -3,6 +3,11 @@
 from odoo import models, fields, api
 from datetime import datetime
 
+class AccountPaymentTerm(models.Model):
+	_inherit = "account.payment.term"
+
+	ship_without_payment = fields.Boolean('Shipstation Payment not Required', default=False)
+
 class SaleOrder(models.Model):
 	_inherit = "sale.order"
 
@@ -27,7 +32,10 @@ class SaleOrder(models.Model):
 		elif self.invoice_status == 'invoiced':
 			for invoice in invoices:
 				if invoice.state not in ['in_payment', 'paid', 'cancel']:
-					return 'unpaid'
+					if invoice.payment_term_id and invoice.payment_term_id.ship_without_payment:
+						return 'paid'
+					else:
+						return 'unpaid'
 
 			undelivered = False
 			for line in self.order_line:

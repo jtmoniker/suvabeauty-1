@@ -80,6 +80,7 @@ class ShipstationCustomStore(http.Controller):
 		self._append_element(root.find('./Customer'), 'ShipTo', False, False)
 		self._append_element(root.find('./Customer/ShipTo'), 'Name', order.partner_shipping_id.name, True)
 		self._append_element(root.find('./Customer/ShipTo'), 'Address1', order.partner_shipping_id.street, True)
+		self._append_element(root.find('./Customer/ShipTo'), 'Address2', order.partner_shipping_id.street2, True)
 		self._append_element(root.find('./Customer/ShipTo'), 'City', order.partner_shipping_id.city, True)
 		self._append_element(root.find('./Customer/ShipTo'), 'State', order.partner_shipping_id.state_id.code, True)
 		self._append_element(root.find('./Customer/ShipTo'), 'PostalCode', order.partner_shipping_id.zip, True)
