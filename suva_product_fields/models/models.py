@@ -179,9 +179,3 @@ class SaleOrder(models.Model):
 			weight += (line.product_id.weight * line.product_uom_qty)
 
 		self.total_weight = weight
-
-class CouponProgram(models.Model):
-
-	_inherit = "sale.coupon.program"
-
-	currency_id = fields.Many2one('res.currency', string="Currency", default=lambda self: self.env.user.company_id.currency_id, required=True, readonly=False)
