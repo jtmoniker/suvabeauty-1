@@ -95,7 +95,7 @@
             </xpath>
             <xpath expr="//div[@id='informations']" position="after">
                 <div t-if="o.team_id.team_type == 'website'" class="row mt32 mb32" id="informations">
-                    <t t-set="so" t-value="request.env['sale.order'].sudo().search([('name','=',o.origin)], limit=1)"/>
+                    <t t-set="so" t-value="o._get_invoice_so()"/>
                     <div class="col-auto mw-100 mb-2" t-if="o.origin" name="origin">
                         <strong>ORDER #:</strong>
                         <p class="m-0" t-field="o.origin"/>
