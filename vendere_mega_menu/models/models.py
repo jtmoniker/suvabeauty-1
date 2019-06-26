@@ -37,6 +37,13 @@ class WebsiteMenu(models.Model):
 		})
 		self.mega_menu_id.unlink()
 
+	def open_mega_menu(self):
+		self.ensure_one()
+		action = self.env.ref('vendere_mega_menu.action_website_mega_menu_form').read()[0]
+		action['res_id'] = self.mega_menu_id.id
+		return action
+
+
 class VendereMegaMenu(models.Model):
 
 	_name = "vendere.mega.menu"
