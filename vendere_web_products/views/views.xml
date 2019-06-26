@@ -188,6 +188,13 @@
           (0, 0, {'view_mode': 'form', 'view_id': ref('vendere_web_products.website_product_content_form')})]"/>
     </record>
 
+    <record id="product_template_action_product_tags" model="ir.actions.act_window">
+      <field name="name">Product Tags</field>
+      <field name="res_model">product.template.tag</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     <record id="action_product_attribute_groups" model="ir.actions.act_window">
       <field name="name">Attribute Groups</field>
       <field name="res_model">product.attribute.group</field>
@@ -196,6 +203,8 @@
     </record>
 
     <menuitem id="website_product_content" name="Product Contents" parent="website_sale.menu_catalog" sequence="0" action="vendere_web_products.product_template_action_website_content" groups="website.group_website_designer"/>
+
+    <menuitem id="website_product_tags" name="Product Tags" parent="website_sale.menu_catalog" sequence="40" action="vendere_web_products.product_template_action_product_tags" groups="website.group_website_designer"/>
 
     <menuitem id="website_product_attribute_groups" name="Attribute Groups" parent="website_sale.menu_product_settings" sequence="99" action="vendere_web_products.action_product_attribute_groups" groups="website.group_website_designer"/>
 

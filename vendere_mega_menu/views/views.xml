@@ -13,7 +13,10 @@
         <xpath expr="//group[1]" position="before">
           <field name="has_mega" invisible="1"/>
           <div class="oe_button_box" name="button_box">
-            <button name="unlink_mega_menu" type="object" class="oe_stat_button" icon="fa-bars" attrs="{'invisible':[('has_mega','=',False)]}">
+            <button name="open_mega_menu" type="object" class="oe_stat_button" icon="fa-bars" attrs="{'invisible': [('has_mega','=',False)]}">
+              <span>Edit Mega Menu</span>
+            </button>
+            <button name="unlink_mega_menu" type="object" class="oe_stat_button" icon="fa-trash-o" attrs="{'invisible':[('has_mega','=',False)]}">
               <span>Remove Mega Menu</span>
             </button>
             <button name="create_mega_menu" type="object" class="oe_stat_button" icon="fa-bars" attrs="{'invisible':[('has_mega','=',True)]}">
@@ -64,8 +67,9 @@
       <field name="name">Website Mega Menu</field>
       <field name="res_model">vendere.mega.menu</field>
       <field name="view_type">form</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">form</field>
       <field name="target">current</field>
+      <field name="context">{'form_view_initial_mode': 'edit'}</field>
     </record>
 
   </data>
