@@ -1,0 +1,12 @@
+<odoo>
+	<data>
+
+		<template id="vendere_assets" name="Vendere Styles" inherit_id="website.assets_frontend">
+            <xpath expr="link[last()]" position="after">
+                <link rel="stylesheet" type="text/scss" href="/ecommerce_product_reviews/static/src/scss/product-reviews.scss"/>
+                <script type="text/javascript" src="/ecommerce_product_reviews/static/src/js/product-reviews.js"></script>
+            </xpath>
+        </template>
+
+	</data>
+</odoo>

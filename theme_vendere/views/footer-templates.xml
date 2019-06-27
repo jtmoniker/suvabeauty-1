@@ -1,0 +1,97 @@
+<odoo>
+	<data>
+
+		<template id="vendere_footer_custom" inherit_id="website.footer_custom">
+			<xpath expr="//section" position="replace">
+				<section>
+					<div class="container-fluid footer-top-container">
+						<div class="row">
+							<section>
+								<h2>Hey #SUVASquad! Hear it first from us ;)</h2>
+								<p>Join our mailing list to stay up-to-date on new launces, promos and all things SUVA!</p>
+							</section>
+						</div>
+					</div>
+					<div class="container footer-container">
+						<div class="row">
+							<div class="footer-brand col-md-12 col-lg-4">
+								<div class="footer-logo">
+		                            <a href="/" class="logo">
+		                                <img class="logo-lg" src="/theme_vendere/static/img/footer-logo.png" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+		                            </a>
+								</div>
+								<div class="footer-social">
+									<a t-if="website.social_facebook" t-att-href="website.social_facebook" class="btn btn-s btn-link"><i class="fa fa-2x fa-facebook"/></a>
+	                                <a t-if="website.social_twitter" t-att-href="website.social_twitter" class="btn btn-sm btn-link"><i class="fa fa-2x fa-twitter"/></a>
+	                                <a t-if="website.social_instagram" t-att-href="website.social_instagram" class="btn btn-sm btn-link"><i class="fa fa-2x fa-instagram"/></a>
+	                                <a t-if="website.social_linkedin" t-att-href="website.social_linkedin" class="btn btn-sm btn-link"><i class="fa fa-2x fa-linkedin"/></a>
+	                                <a t-if="website.social_youtube" t-att-href="website.social_youtube" class="btn btn-sm btn-link"><i class="fa fa-2x fa-youtube-play"/></a>
+	                                <a t-if="website.social_googleplus" t-att-href="website.social_googleplus" class="btn btn-sm btn-link" rel="publisher"><i class="fa fa-2x fa-google-plus-square"/></a>
+	                                <a t-if="website.social_github" t-att-href="website.social_github" class="btn btn-sm btn-link"><i class="fa fa-2x fa-github"/></a>
+	                            </div>
+							</div>
+							<div class="footer-menu col-md-4 col-lg-2 col-12">
+								<h4>MAIN</h4>
+								<a href="/shop">Shop</a>
+								<a href="/aboutus">About</a>
+								<a href="#">Mentorship Program</a>
+								<a href="#">Blog</a>
+							</div>
+							<div class="footer-menu col-md-4 col-lg-2 col-12">
+								<h4>SUPPORT</h4>
+								<a href="#">FAQ</a>
+								<a href="#">Shipping</a>
+								<a href="#">Store Locator</a>
+								<a href="/contactus">Contact</a>
+							</div>
+							<div class="footer-menu col-md-4 col-lg-3 col-12">
+								<h4>GET IN TOUCH</h4>
+								<div class="container-fluid d-none d-md-inline-block">
+									<div class="row">
+										<div class="col-2">
+											<i class="fa fa-map-marker"></i>
+										</div>
+										<div class="col-10">
+											<span>Vancouver, BC</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											<i class="fa fa-phone"></i>
+										</div>
+										<div class="col-10">
+											<a href="tel:604-283-4033">604-283-4033</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											<i class="fa fa-envelope-o"></i>
+										</div>
+										<div class="col-10">
+											 <a href="mailto:info@suvabeauty.com">info@suvabeauty.com</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											<i class="fa fa-clock-o"></i>
+										</div>
+										<div class="col-10">
+											 <span>9am - 7pm PST 7 days a week!</span>
+										</div>
+									</div>
+								</div>
+								<div class="d-flex d-md-none">
+									<span>Vancouver, BC</span>
+									<a href="tel:604-283-4033">604-283-4033</a>
+									<a href="mailto:info@suvabeauty.com">info@suvabeauty.com</a>
+									<span>9am - 7pm PST 7 days a week!</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</xpath>
+		</template>
+
+	</data>
+</odoo>

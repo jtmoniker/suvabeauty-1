@@ -1,0 +1,110 @@
+<odoo>
+	<data>
+
+		<template id="vendere_contact" inherit_id="website.contactus">
+			<xpath expr="//h1" position="attributes">
+				<attribute name="style">text-transform: uppercase</attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-4']" position="replace"></xpath>
+			<xpath expr="//div[@class='col-lg-8']/div[@class='oe_structure']" position="replace"></xpath>
+			<xpath expr="//div[@class='col-lg-8']" position="before">
+				<div class="contact-card col-lg-7 oe_structure">
+					<div class="top-card">
+						<h3>WE WOULD LOVE TO HEAR FROM YOU!</h3>
+						<hr/>
+						<p>Customer Service Hours for phone support is Monday - Saturday from 9:00 am to 5:00 pm PST.</p>
+						<div class="contact-info row">
+							<div class="col-12 col-sm-4">
+								<i class="fa fa-phone"/>
+								<p>
+									<strong>CALL US</strong>
+								</p>
+								<a href="tel:604-283-4033">604-283-4033</a>
+							</div>
+							<div class="col-12 col-sm-4">
+								<i class="fa fa-envelope"/>
+								<p>
+								   <strong>EMAIL</strong>
+								</p>
+								<a href="mailto:info@suvabeauty.com">info@suvabeauty.com</a>
+							</div>
+							<div class="col-12 col-sm-4">
+								<i class="fa fa-map-marker"/>
+								<p>
+									<strong>OUR ADDRESS</strong>
+								</p>
+								<p>Unit 122 - 7536 130 Street SURREY, BC V3W 1H8, Canada</p>
+							</div>
+						</div>
+					</div>
+					<div class="bottom-card">
+						<h3>WHERE IS THAT?</h3>
+						<p>Vancouver to Seattle, USA - 230km / 143 miles</p>
+						<p>Vancouver to Los Angeles, USA - 2050km / 1274 miles</p>
+						<p>Vancouver to New York, USA - 4817km / 2994 miles</p>
+						<p>Vancouver to London, UK - 7573km / 4705 miles</p>
+						<p>*Our shipping is FAST no matter where you are ordering from!</p>
+					</div>
+				</div>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-8']" position="attributes">
+				<attribute name="class">contact-form col-lg-5</attribute>
+			</xpath>
+		</template>
+
+		<template id=" vendere_contactus_form" inherit_id="website_crm.contactus_form">
+			<xpath expr="//form" position="attributes">
+				<attribute name="class">s_website_form container-fluid</attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='col-lg-7 col-md-8']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//div[@class='offset-lg-3 offset-md-4 col-md-8 col-lg-7']" position="attributes">
+				<attribute name="class"></attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			<xpath expr="//label[@class='col-lg-3 col-md-4 col-form-label']" position="attributes">
+				<attribute name="class">col-form-label</attribute>
+				<attribute name="style">font-weight: 100</attribute>
+			</xpath>
+			
+			<xpath expr="//form/div[2]" position="replace"></xpath>
+			<xpath expr="//form/div[3]" position="replace"></xpath>
+		</template>
+
+	</data>
+</odoo>

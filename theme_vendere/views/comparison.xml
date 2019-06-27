@@ -1,0 +1,24 @@
+<odoo>
+	<data>
+
+		<template id="comparison_card" inherit_id="theme_vendere.vendere_products_card">
+			<xpath expr="//div[@class='prod_actions']" position="after">
+				<t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+				<t t-if="request.website.viewref('website_sale_comparison.add_to_compare').active">
+		            <a t-if="product_variant_id" class="d-none d-md-inline-block o_add_compare" title="Compare" aria-label="Compare" t-att-data-product-product-id="product_variant_id" data-action="o_comparelist">
+		            	<i class="fa fa-exchange"></i>
+		            </a>
+	            </t>
+			</xpath>
+		</template>
+
+		<template id="compare_product" inherit_id="website_sale_comparison.product_add_to_compare">
+        	<xpath expr="//button" position="replace">
+	        	<a t-if="product_variant" class="d-none d-md-inline-block o_add_compare_dyn" title="Compare" aria-label="Compare" t-att-data-product-product-id="product_variant.id" data-action="o_comparelist">
+	        		<i class="fa fa-exchange"></i>
+	        	</a>
+        	</xpath>
+        </template>
+
+	</data>
+</odoo>

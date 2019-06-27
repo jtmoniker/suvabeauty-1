@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+    
+<!-- Mega Menu Records -->
+
+    <!-- Mega Menu Views -->
+
+    <record id="website_menu_form_mega" model="ir.ui.view">
+      <field name="name">website.menu.form.mega</field>
+      <field name="inherit_id" ref="website.website_menus_form_view"/>
+      <field name="model">website.menu</field>
+      <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="before">
+          <field name="has_mega" invisible="1"/>
+          <div class="oe_button_box" name="button_box">
+            <button name="open_mega_menu" type="object" class="oe_stat_button" icon="fa-bars" attrs="{'invisible': [('has_mega','=',False)]}">
+              <span>Edit Mega Menu</span>
+            </button>
+            <button name="unlink_mega_menu" type="object" class="oe_stat_button" icon="fa-trash-o" attrs="{'invisible':[('has_mega','=',False)]}">
+              <span>Remove Mega Menu</span>
+            </button>
+            <button name="create_mega_menu" type="object" class="oe_stat_button" icon="fa-bars" attrs="{'invisible':[('has_mega','=',True)]}">
+              <span>Create Mega Menu</span>
+            </button>
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="mega_product_public_category_form_view" model="ir.ui.view">
+      <field name="name">mega.product.public.category.form</field>
+      <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+      <field name="model">product.public.category</field>
+      <field name="arch" type="xml">
+        <xpath expr="//group" position="after">
+          <group string="Mega Menu Settings">
+            <field name="mega_exclude"/>
+            <field name="mega_image" widget="image" attrs="{'invisible': [('mega_exclude','=',True)]}"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_mega_menu_form" model="ir.ui.view">
+      <field name="name">website.mega.menu.form</field>
+      <field name="model">vendere.mega.menu</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h1>
+              <field name="name"/>
+            </h1>
+            <group>
+              <field name="mega_type"/>
+            </group>
+            <group>
+              <field name="meta_tags" attrs="{'invisible': [('mega_type','!=','meta')]}" widget="many2many_tags"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Mega Menu Actions -->
+
+    <record id="action_website_mega_menu_form" model="ir.actions.act_window">
+      <field name="name">Website Mega Menu</field>
+      <field name="res_model">vendere.mega.menu</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">current</field>
+      <field name="context">{'form_view_initial_mode': 'edit'}</field>
+    </record>
+
+  </data>
+</odoo>

@@ -29,8 +29,8 @@
       <field name="model">product.template</field>
       <field name="priority" eval="101"/>
       <field name="arch" type="xml">
-        <tree edit="0" create="0" delete="0">
-          <field name="sequence" widget="handle"/>
+        <tree edit="0" create="0" delete="0" default_order="website_sequence asc">
+          <field name="website_sequence" widget="handle"/>
           <field name="name"/>
           <field name="default_code"/>
           <field name="website_published"/>
@@ -64,6 +64,7 @@
               <group colspan="1" string="Basic Configuration">
                 <field name="website_published"/>
                 <field name="inventory_availability"/>
+                <field name="available_threshold" attrs="{'invisible': [('inventory_availability','!=','threshold')]}"/>
                 <field name="alternative_product_ids" widget="many2many_tags"/>
                 <field name="accessory_product_ids" widget="many2many_tags"/>
                 <field name="featured_product"/>
@@ -71,7 +72,8 @@
               <group colspan="1" string="Specifications">
                 <field name="default_code" readonly="1"/>
                 <field name="public_categ_ids" widget="many2many_tags"/>
-                <field name="ecommerce_tag"/>
+                <field name="ecommerce_tag" string="Sortable Tag"/>
+                <field name="meta_tags" widget="many2many_tags"/>
                 <field name="finish_id"/>
               </group>
             </group>
@@ -126,7 +128,7 @@
             <br/>
             <h2 style="border-bottom: solid 1px grey">Quickview Content</h2>
             <br/>
-            <field name="website_description" widget='html' options="{'style-inline': true}"/>
+            <field name="quickview_description" widget='html' options="{'style-inline': true}"/>
             <br/>
             <h2 style="border-bottom: solid 1px grey">Product Description</h2>
             <br/>
@@ -186,6 +188,13 @@
           (0, 0, {'view_mode': 'form', 'view_id': ref('vendere_web_products.website_product_content_form')})]"/>
     </record>
 
+    <record id="product_template_action_product_tags" model="ir.actions.act_window">
+      <field name="name">Product Tags</field>
+      <field name="res_model">product.template.tag</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     <record id="action_product_attribute_groups" model="ir.actions.act_window">
       <field name="name">Attribute Groups</field>
       <field name="res_model">product.attribute.group</field>
@@ -194,6 +203,8 @@
     </record>
 
     <menuitem id="website_product_content" name="Product Contents" parent="website_sale.menu_catalog" sequence="0" action="vendere_web_products.product_template_action_website_content" groups="website.group_website_designer"/>
+
+    <menuitem id="website_product_tags" name="Product Tags" parent="website_sale.menu_catalog" sequence="40" action="vendere_web_products.product_template_action_product_tags" groups="website.group_website_designer"/>
 
     <menuitem id="website_product_attribute_groups" name="Attribute Groups" parent="website_sale.menu_product_settings" sequence="99" action="vendere_web_products.action_product_attribute_groups" groups="website.group_website_designer"/>
 

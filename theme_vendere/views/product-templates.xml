@@ -1,0 +1,155 @@
+<odoo>
+	<data>
+
+		<template id="vendere_product_price" inherit_id="website_sale.product_price">
+			<xpath expr="//span[@itemprop='priceCurrency']" position="attributes">
+				<attribute name="style"></attribute>
+			</xpath>
+		</template>
+
+		<template id="vendere_product" inherit_id="website_sale.product">
+			<xpath expr="//section/div[1]/div[1]" position="attributes">
+				<attribute name="class">col-md-6</attribute>
+			</xpath>
+			<xpath expr="//section/div[1]/div[2]" position="replace">
+			</xpath>
+			<xpath expr="//ol[@class='breadcrumb']/li[1]" position="replace">
+				<li class="breadcrumb-item first">
+					<a href="/">Home</a>
+				</li>
+			</xpath>
+			<xpath expr="//ol[@class='breadcrumb']/li[2]" position="replace">
+				<t t-if="len(categories)">
+					<t t-foreach="categories" t-as="cat">
+						<li t-if="cat.parent_id" class="breadcrumb-item">
+							<a t-att-href="keep('/shop/category/%s' % slug(cat), category=0)" t-field="cat.name" />
+						</li>
+					</t>
+				</t>
+			</xpath>
+			<xpath expr="//section[@id='product_detail']/div[2]/div[1]" position="attributes">
+				<attribute name="class">col-lg-6</attribute>
+			</xpath>
+			<xpath expr="//div[@id='product_details']" position="attributes">
+				<attribute name="class">col-lg-6</attribute>
+			</xpath>
+			<xpath expr="//div[@id='product_details']/p[@class='text-muted']" position="before">
+				<ul id="product_share" style="list-style: none;">
+					<li>
+						<a t-attf-href="https://www.facebook.com/sharer/sharer.php?u=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.twitter.com/share?text=?url=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.pinterest.com/pin/create/button/?url=#{request.httprequest.url_root}website/image/product.template/#{product.id}/image" target="_blank">
+							<i class="fa fa-pinterest"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://plus.google.com/share?url=#{request.httprequest.url}" target="_blank">
+							<i class="fa fa-google-plus"></i>
+						</a>
+					</li>
+					<li>
+						<a t-attf-href="https://www.linkedin.com/cws/share?url=#{request.httprequest.url}" title="Follow us on linkedin" target="_blank">
+							<i class="fa fa-linkedin"></i>
+						</a>
+					</li>
+				</ul>
+				<hr/>
+			</xpath>
+			<xpath expr="//h1[@itemprop='name']" position="after">
+				<t t-set="avg_rating" t-value="product.get_avg_rating()"/>
+				<h3 t-if="len(product.public_categ_ids)"><t t-esc="product.public_categ_ids[0].name"/></h3>
+				<t t-call="ecommerce_product_reviews.review_visual">
+                    <t t-set="rating" t-value="avg_rating"/>
+                    <t t-set="rating_count" t-value="review_count"/>
+                    <t t-set="show_count" t-value="True"/>
+                </t>
+				<hr style="padding: 0"/>
+					<span>Product Code: <span style="color: #a7a6a7"><t t-esc="product.default_code"/></span></span>
+				<hr/>
+			</xpath>
+			<xpath expr="//div[@class='js_product js_main_product']/t[@t-call='website_sale.product_price']" position="replace"></xpath>
+			<xpath expr="//div[@class='js_product js_main_product']/t[1]" position="before">
+				<t t-call="website_sale.product_price"/>
+			</xpath>
+			<xpath expr="//section[@id='product_detail']" position="inside">
+					<ul class="nav nav-tabs" style="margin-bottom: 25px;">
+					  <li t-if="product.website_long_description" style="margin-right: 50px;" class="nav-item"><a t-attf-class="nav-link {{ 'active' if product.website_long_description else '' }}" data-toggle="tab" href="#prod_description">Description</a></li>
+					  <li t-if="product.product_instructions" class="nav-item"><a t-attf-class="nav-link {{ 'active' if not product.website_long_description else '' }}" data-toggle="tab" href="#prod_instructions">How to Use</a></li>
+					</ul>
+					<div class="tab-content">
+					  <div id="prod_description" class="tab-pane fade show active">
+					    <div t-field="product.website_long_description"/>
+					  </div>
+					  <div id="prod_instructions" t-attf-class="{{ 'tab-pane fade in active' if not product.website_long_description else 'tab-pane fade' }}" style="font-size: 1.25em">
+					  	<div t-field="product.product_instructions"/>
+					  </div>
+					</div>
+			</xpath>
+			<xpath expr="//div[@id='product_full_description']" position="attributes">
+				<attribute name="style">display: none;</attribute>
+			</xpath>
+
+		</template>
+
+		<template id="vendere_recommended_products" name="Vendere Alternative Products" active="True" inherit_id="website_sale.product">
+			<xpath expr="//div[@id='product_full_description']" position="after">
+				<div class="slider-products container-fluid" t-if="product.alternative_product_ids">
+	                <h3>You May Also Like</h3>
+	                <ul class="row slider-products-container">
+						<t t-foreach="product.alternative_product_ids" t-as="alt_product">
+							<t t-set="first_possible_combination" t-value="alt_product._get_first_possible_combination()"/>
+							<t t-set="combination_info" t-value="alt_product._get_combination_info(first_possible_combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+							<t t-set="product_variant" t-value="alt_product.env['product.product'].browse(combination_info['product_id'])"/>
+							<t t-set="secondary_img" t-value="alt_product._get_secondary_img() or ''"/>
+							<t t-set="style_html" t-value="alt_product._get_style_classes() or ''"/>
+							<t t-set="avg_rating" t-value="alt_product.get_avg_rating()"/>
+							<t t-set="review_count" t-value="alt_product.get_ecommerce_rating_count()"/>
+							
+							<li t-attf-data-product="#{alt_product.id}">
+								<div class='slider-prod'>
+									<div class="slide-img">
+										<a t-attf-href="/shop/product/#{alt_product.id}">
+											<img class="img img-fluid rounded" t-attf-src="/website/image/product.template/#{alt_product.id}/image"/>
+										</a>
+									</div>
+									<div class="slide-content">
+										<h6 class="prod-categ" t-if="len(alt_product.public_categ_ids)"><t t-esc="alt_product.public_categ_ids[0].name"/></h6>
+										<h5 class="prod-name"><t t-esc="alt_product.name"/></h5>
+										<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+											<b>
+												<span class="fp-price" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+												<span itemprop="price" style="display:none;"><t t-esc="combination_info['price']"/></span>
+												<t t-call="ecommerce_product_reviews.review_visual">
+								                    <t t-set="rating" t-value="avg_rating"/>
+								                    <t t-set="rating_count" t-value="review_count"/>
+								                    <t t-set="show_count" t-value="True"/>
+								                </t>
+											</b>
+											<div class="slide-action">
+												<a t-attf-href="/shop/product/#{alt_product.id}" role="button" class="btn btn-secondary btn-sm a-submit" aria-label="Shopping cart" title="Shopping cart">
+													<span>View Product</span>
+												</a>
+												<a type='button' class="quickview" t-attf-data-product-id="#{alt_product.id}">
+													<i class="fa fa-eye"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</t>
+					</ul>
+	            </div>
+			</xpath>
+		</template>
+
+	</data>
+</odoo>

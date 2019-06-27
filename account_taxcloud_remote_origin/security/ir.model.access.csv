@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_taxcloud_remote_origin_account_taxcloud_remote_origin,account_taxcloud_remote_origin.account_taxcloud_remote_origin,model_account_taxcloud_remote_origin_account_taxcloud_remote_origin,,1,0,0,0

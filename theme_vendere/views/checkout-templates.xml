@@ -1,0 +1,23 @@
+<odoo>
+	<data>
+
+		<template id="vendere_total" inherit_id="website_sale.total">
+			<xpath expr="//tr[@id='order_total']/td[2]/strong" position="after">
+				<strong itemprop="priceCurrency" t-esc="website.currency_id.name" />
+			</xpath>
+		</template>
+
+		<template id="vendere_address" inherit_id="website_sale.address">
+			<xpath expr="//label[@for='name']" position="replace">
+				<label class="col-form-label" for="name">Full Name</label>
+			</xpath>
+			<xpath expr="//input[@name='field_required']" position="replace">
+				<input type="hidden" name="field_required" t-att-value="'zip,name'" />
+			</xpath>
+			<xpath expr="//label[@for='phone']" position="attributes">
+				<attribute name="class">col-form-label label-optional</attribute>
+			</xpath>
+		</template>
+
+	</data>
+</odoo>
