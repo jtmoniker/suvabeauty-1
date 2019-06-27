@@ -12,4 +12,7 @@
     "depends": [
         "mail",
     ],
+    'data': [
+        'views/mail_notification_view.xml',
+    ],
 }
