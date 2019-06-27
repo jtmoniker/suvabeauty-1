@@ -13,6 +13,6 @@
         "mail",
     ],
     'data': [
-        'views/mail_notification_view.xml',
+        'views/mail_notifications.xml',
     ],
 }
