@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See COPYRIGHT & LICENSE files for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 
 class ProductAttribute(models.Model):
@@ -17,6 +17,13 @@ class ProductAttributeValue(models.Model):
 	image = fields.Binary("Image", attachment=True,
 		help="This field holds the image used for the Attribute's value")
 	linked_product = fields.Many2one('product.template', string="Linked Product")
+
+	@api.model
+	def _check_link_published(self):
+		if self.sudo().linked_product and self.sudo().linked_product.website_published:
+			return True
+		else:
+			return False
 
 class SaleOrder(models.Model):
 

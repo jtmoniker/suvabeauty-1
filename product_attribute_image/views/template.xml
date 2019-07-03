@@ -16,7 +16,7 @@
                         </t>
                     </t>
 
-                    <li t-foreach="variant_id.product_template_value_ids" t-as="value_id" class="list-inline-item" t-attf-data-name="#{value_id.product_attribute_value_id.linked_product.name}">
+                    <li t-foreach="variant_id.product_template_value_ids" t-as="value_id" t-if="value_id.product_attribute_value_id._check_link_published()" class="list-inline-item" t-attf-data-name="#{value_id.product_attribute_value_id.linked_product.name}">
 
                         <!-- Check input if parameters are met -->
                         
@@ -71,7 +71,7 @@
             <t t-if="variant_id.attribute_id.type == 'image' and not variant_id.attribute_id.link_to_product">
                 <ul t-att-data-attribute_id="variant_id.attribute_id.id" class="list-inline">
                     <t t-set="inc" t-value="0"/>
-                    <li t-foreach="variant_id.product_template_value_ids" t-as="value_id" class="list-inline-item" t-attf-data-name="#{value_id.product_attribute_value_id.linked_product.name}">
+                    <li t-foreach="variant_id.product_template_value_ids" t-as="value_id" t-if="value_id.product_attribute_value_id._check_link_published()" class="list-inline-item" t-attf-data-name="#{value_id.product_attribute_value_id.linked_product.name}">
                         <label t-attf-class="css_attribute_color #{'active' if not inc else ''}" t-att-title="value_id.name">
                             <input type="radio"
                             t-attf-class="js_variant_change #{variant_id.attribute_id.create_variant} d-none"
