@@ -21,9 +21,9 @@ class PaypalController(PaypalController):
 		else:
 			tx = request.env['payment.transaction'].search([('reference', '=', post.get('item_number'))])
 			try:
-				tx._post_process_after_done()
-				self.env.cr.commit()
+				tx.sudo()._post_process_after_done()
+				request.env.cr.commit()
 			except Exception as e:
-				_logger.exception("Transaction post processing failed")
-				self.env.cr.rollback()
+				_logger.exception("Transaction post processing failed:" + " " + e.message)
+				request.env.cr.rollback()
 		return ''
