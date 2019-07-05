@@ -20,3 +20,10 @@ class SaleCouponProgram(models.Model):
 
 		return message
 
+	@api.model
+	def _filter_on_validity_dates(self, order):
+		return self.filtered(lambda program:
+			program.rule_date_from and program.rule_date_to and
+			program.rule_date_from <= datetime.now() and program.rule_date_to >= datetime.now() or
+			not program.rule_date_from or not program.rule_date_to)
+
