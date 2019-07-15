@@ -20,7 +20,7 @@ class ProductAttributeValue(models.Model):
 
 	@api.model
 	def _check_link_published(self):
-		if self.sudo().linked_product and self.sudo().linked_product.website_published:
+		if self.sudo().linked_product and self.sudo().linked_product.website_published and self.sudo().linked_product.active:
 			return True
 		else:
 			return False
